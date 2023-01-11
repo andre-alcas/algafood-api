@@ -79,8 +79,8 @@ public class CozinhaController {
 //		}
 //		return ResponseEntity.notFound().build();
 //	}
-	@DeleteMapping(value = "/{cozinhaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping(value = "/{cozinhaId}")
 	public void remover(@PathVariable Long cozinhaId) {//instancia de cozinha com propriedades vinda do corpo da requisição
 			cadastroCozinha.excluir(cozinhaId);
 	}
