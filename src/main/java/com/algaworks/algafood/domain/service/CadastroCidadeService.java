@@ -5,10 +5,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeEmUsoException;
-import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cidade;
-import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.repository.EstadoRepository;
@@ -43,7 +42,7 @@ public class CadastroCidadeService {
 		try {
 			cidadeRepository.deleteById(cidadeId);
 		}catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
+			throw new CidadeNaoEncontradaException(
 					String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId));
 		}catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
@@ -52,6 +51,6 @@ public class CadastroCidadeService {
 	}
 	
 	public Cidade buscarOuFalhar(Long cidadeId) {
-		return cidadeRepository.findById(cidadeId).orElseThrow(()-> new EntidadeNaoEncontradaException(String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId)));
+		return cidadeRepository.findById(cidadeId).orElseThrow(()-> new CidadeNaoEncontradaException(String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId)));
 	}
 }
