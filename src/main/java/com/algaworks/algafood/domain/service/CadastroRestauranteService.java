@@ -32,22 +32,23 @@ public class CadastroRestauranteService {
 		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 //		Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
 //				.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format("Não existe um cadastro de cozinha com código %d", cozinhaId)));
-//		restaurante.setCozinha(cozinha);
-		
+
+		restaurante.setCozinha(cozinha);
+	
 		return restauranteRepository.save(restaurante); 
 	}
 	
-	public void excluir(Long restauranteId) {
-		try {
-			restauranteRepository.deleteById(restauranteId);
-		}catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(
-					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
-		}catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(
-					String.format(MSG_RESTAURANTE_EM_USO, restauranteId));
-		}
-	}
+//	public void excluir(Long restauranteId) {
+//		try {
+//			restauranteRepository.deleteById(restauranteId);
+//		}catch (EmptyResultDataAccessException e) {
+//			throw new EntidadeNaoEncontradaException(
+//					String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId));
+//		}catch (DataIntegrityViolationException e) {
+//			throw new EntidadeEmUsoException(
+//					String.format(MSG_RESTAURANTE_EM_USO, restauranteId));
+//		}
+//	}
 	public Restaurante buscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId).orElseThrow(()-> new EntidadeNaoEncontradaException(String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
 	}

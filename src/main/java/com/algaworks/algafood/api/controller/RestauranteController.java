@@ -65,11 +65,11 @@ public class RestauranteController {
 		return cadastroRestaurante.salvar(restauranteAtual);
 	}
 
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping(value = "/{restauranteId}")
-	public void remover(@PathVariable Long restauranteId) {
-		cadastroRestaurante.excluir(restauranteId);
-	}
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	@DeleteMapping(value = "/{restauranteId}")
+//	public void remover(@PathVariable Long restauranteId) {
+//		cadastroRestaurante.excluir(restauranteId);
+//	}
 
 	@PatchMapping(value = "/{restauranteId}")
 	public Restaurante atualizarParcial(@PathVariable Long restauranteId,
