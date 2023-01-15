@@ -44,8 +44,8 @@ public class Restaurante {
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
-	@JsonIgnore
-	@ManyToOne(fetch = FetchType.LAZY) //estrategia eager loading
+	//@JsonIgnore
+	@ManyToOne//(fetch = FetchType.LAZY) //estrategia eager loading
 	@JoinColumn(name= "cozinha_id",nullable = false) //forma de nomear a chave estrangeira criada. o padrão é cozinha_id
 	private Cozinha cozinha;
 	
