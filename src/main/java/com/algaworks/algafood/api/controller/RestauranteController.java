@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -54,7 +55,7 @@ public class RestauranteController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Restaurante adicionar(@RequestBody Restaurante restaurante) {// instancia de restaurante com propriedades vinda do corpo da requisição
+	public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {// instancia de restaurante com propriedades vinda do corpo da requisição
 		try {
 			return cadastroRestaurante.salvar(restaurante);
 		}catch (EntidadeNaoEncontradaException e) {
