@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
+
 @ControllerAdvice //anotacao que faz com que todas as exceptions sejam tratadas por aqui, centralizacao
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
