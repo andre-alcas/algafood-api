@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,11 +16,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.algaworks.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -32,19 +39,30 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Restaurante {
 	
+	
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	//@NotNull //aceita espaço em branco
+	//@NotEmpty //não aceita 1 espaço em branco, mas aceita vários
+	//não aceita 1 espaço em branco e nem aceita vários
+	//@NotBlank(groups = {Groups.CadastroRestaurante.class})
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
+	//@DecimalMin("1")
+	@PositiveOrZero
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
 	
 	//@JsonIgnore
+	@Valid
+	//@NotNull(groups = {Groups.CadastroRestaurante.class})
+	@NotNull
+	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@ManyToOne//(fetch = FetchType.LAZY) //estrategia eager loading
 	@JoinColumn(name= "cozinha_id",nullable = false) //forma de nomear a chave estrangeira criada. o padrão é cozinha_id
 	private Cozinha cozinha;

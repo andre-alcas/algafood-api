@@ -2,10 +2,11 @@ package com.algaworks.algafood.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.algafood.domain.service.CadastroCozinhaService;
@@ -53,12 +52,12 @@ public class CozinhaController {
 //	}
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public Cozinha adicionar(@RequestBody Cozinha cozinha) {//instancia de cozinha com propriedades vinda do corpo da requisição
+	public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) {//instancia de cozinha com propriedades vinda do corpo da requisição
 		return cadastroCozinha.salvar(cozinha);//retornar no corpo da resposta o recurso
 	}
 
 	@PutMapping(value = "/{cozinhaId}")
-	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {//instancia de cozinha com propriedades vinda do corpo da requisição
+	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody  @Valid Cozinha cozinha) {//instancia de cozinha com propriedades vinda do corpo da requisição
 		Cozinha cozinhaAtual =  cadastroCozinha.buscarOuFalhar(cozinhaId);
 		
 		BeanUtils.copyProperties(cozinha, cozinhaAtual,"id");

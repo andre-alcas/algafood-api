@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import com.algaworks.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -24,6 +27,7 @@ import lombok.EqualsAndHashCode;
 //@JsonRootName("gastronomia")
 public class Cozinha {
 	
+	@NotNull(groups = {Groups.CozinhaId.class})
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -33,6 +37,7 @@ public class Cozinha {
 	
 	//@JsonIgnore
 	//@JsonProperty(value = "título")
+	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
