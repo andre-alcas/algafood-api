@@ -49,11 +49,12 @@ public class Restaurante {
 	//@NotEmpty //não aceita 1 espaço em branco, mas aceita vários
 	//não aceita 1 espaço em branco e nem aceita vários
 	//@NotBlank(groups = {Groups.CadastroRestaurante.class})
-	@NotBlank
+	@NotBlank//(message =  "Nome é obrigatório")
 	@Column(nullable = false)
 	private String nome;
 	
 	//@DecimalMin("1")
+	@NotNull
 	@PositiveOrZero
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
