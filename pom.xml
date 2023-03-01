@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
@@ -68,23 +68,30 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <scope>test</scope>
+		</dependency>
+		
+	     <dependency>
+		  <groupId>io.rest-assured</groupId>
+		  <artifactId>rest-assured</artifactId>
+		  <scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<plugins>
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
+			<plugin>
+      			<artifactId>maven-failsafe-plugin</artifactId>
+      		</plugin>
 		</plugins>
 	</build>
 
