@@ -3,7 +3,9 @@ package com.algaworks.algafood.domain.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -65,7 +67,7 @@ public class Restaurante {
 	@Valid
 	//@NotNull(groups = {Groups.CadastroRestaurante.class})
 	@NotNull
-	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
+	//@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@ManyToOne//(fetch = FetchType.LAZY) //estrategia eager loading
 	@JoinColumn(name= "cozinha_id",nullable = false) //forma de nomear a chave estrangeira criada. o padrão é cozinha_id
 	private Cozinha cozinha;
@@ -73,7 +75,9 @@ public class Restaurante {
 	@Embedded //essa classe está incoporada em outro lugar e sendo incorporada pra dentro de restaurante
 	private Endereco endereco;
 	
-
+	
+	private Boolean ativo = Boolean.TRUE;
+	
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataCadastro;
@@ -86,8 +90,14 @@ public class Restaurante {
 	@JoinTable(name = "restaurante_forma_pagamento", 
 			joinColumns = @JoinColumn(name = "restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-	private List<FormaPagamento> formasPagamento = new ArrayList<>();
+	private Set<FormaPagamento> formasPagamento = new HashSet<>();
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
+	public void ativar() {
+		setAtivo(true);
+	}
+	public void inativar() {
+		setAtivo(false);
+	}
 }

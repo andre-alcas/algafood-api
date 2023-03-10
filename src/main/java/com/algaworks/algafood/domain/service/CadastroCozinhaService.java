@@ -30,6 +30,7 @@ public class CadastroCozinhaService {
 	public void excluir(Long cozinhaId) {
 		try {
 			cozinhaRepository.deleteById(cozinhaId);
+			cozinhaRepository.flush();
 		}catch (EmptyResultDataAccessException e) {
 //			throw new ResponseStatusException(HttpStatus.NOT_FOUND,//nao é bom a camada de dominio usar recursos http, não é nessa camada que faz isso
 //					String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));

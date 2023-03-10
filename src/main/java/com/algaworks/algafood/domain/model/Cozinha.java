@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 //@JsonRootName("gastronomia")
 public class Cozinha {
 	
-	@NotNull(groups = Groups.CozinhaId.class)
+	//@NotNull(groups = Groups.CozinhaId.class)
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Cozinha {
 	
 	//@JsonIgnore
 	//@JsonProperty(value = "título")
-	@NotBlank
+	//@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
