@@ -64,6 +64,24 @@ public class CadastroRestauranteService {
 	}
 	
 	@Transactional
+	public void abrir(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+		
+		//restauranteAtual.setAtivo(true);
+		restauranteAtual.abrir();
+		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
+	}
+	
+	@Transactional
+	public void fechar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+		
+		//restauranteAtual.setAtivo(true);
+		restauranteAtual.fechar();
+		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
+	}
+	
+	@Transactional
 	public void desassociarFormaPagamento(Long restauranteId,Long formaPagamentoId) {
 		Restaurante restaurante = buscarOuFalhar(restauranteId);
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
