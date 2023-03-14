@@ -24,6 +24,7 @@ import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
+import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
@@ -116,6 +117,26 @@ public class RestauranteController {
 		@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void fechamento(@PathVariable Long restauranteId) {
 			cadastroRestaurante.fechar(restauranteId);
+		}
+		
+		@PutMapping(value = "/ativacoes")
+		@ResponseStatus(HttpStatus.NO_CONTENT)
+		public void ativarMuitos(@RequestBody List<Long> restauranteIds) {
+			try {
+				cadastroRestaurante.ativar(restauranteIds);
+			} catch (RestauranteNaoEncontradoException e) {
+				throw new NegocioException(e.getMessage(),e);
+			}
+		}
+		
+		@DeleteMapping(value = "/ativacoes")
+		@ResponseStatus(HttpStatus.NO_CONTENT)
+		public void inativarMuitos(@RequestBody List<Long> restauranteIds) {
+			try {
+				cadastroRestaurante.inativar(restauranteIds);
+			} catch (RestauranteNaoEncontradoException e) {
+				throw new NegocioException(e.getMessage(),e);
+			}
 		}
 
 //	@ResponseStatus(HttpStatus.NO_CONTENT)
