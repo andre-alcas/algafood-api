@@ -3,11 +3,15 @@ package com.algaworks.algafood.api.controller;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
@@ -31,8 +35,8 @@ public class TesteController {
 	@GetMapping("/cozinhas/por-nome") // (produces=
 	// {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
 	// retorna jason e xml, mas dá pra escolher o que produzir(formato)
-	public List<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome) {
-		return cozinhaRepository.findTodasByNomeContaining(nome);
+	public Page<Cozinha> cozinhasPorNome(@RequestParam("nome") String nome, Pageable pageable) {
+		return cozinhaRepository.findTodasByNomeContaining(nome, pageable);
 	}
 
 	@GetMapping("/cozinhas/unica-por-nome")
