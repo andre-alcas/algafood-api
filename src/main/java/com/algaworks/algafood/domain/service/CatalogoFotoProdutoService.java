@@ -47,16 +47,12 @@ public class CatalogoFotoProdutoService {
 				.inputStream(dadosArquivo)
 				.build();
 		
-		if(nomeArquivoExistente != null) {
-			fotoStorage.remover(nomeArquivoExistente);
-		}
-		
-		fotoStorage.armazenar(novaFoto);
+		fotoStorage.substituir(nomeArquivoExistente,novaFoto);
 		
 		return foto;
 	}
 	
-	public FotoProduto recuperar(Long restauranteId, Long produtoId) {
+	public FotoProduto buscarOuFalhar(Long restauranteId, Long produtoId) {
 		
 		FotoProduto fotoExistente = produtoRepository
 				.findFotoById(restauranteId,produtoId)
