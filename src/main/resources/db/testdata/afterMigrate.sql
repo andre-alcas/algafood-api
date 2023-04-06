@@ -123,7 +123,7 @@ insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagame
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                   status, data_criacao, data_confirmacao, data_entrega, subtotal, taxa_frete, valor_total)
 values (3, 'b5741512-8fbc-47fa-9ac1-b530354fc0ff', 1, 7, 1, 1, '38400-222', 'Rua Natal', '200', null, 'Brasil',
-        'ENTREGUE', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
+        'CRIADO', '2019-10-30 21:10:00', '2019-10-30 21:10:45', '2019-10-30 21:55:44', 110, 10, 120);
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (4, 3, 2, 1, 110, 110, null);
