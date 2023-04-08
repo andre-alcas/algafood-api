@@ -20,6 +20,12 @@ public class FluxoPedidoController {
     	fluxoPedido.confirmar(codigoPedido);
     }
     
+    @PutMapping("/confirmacao/sendSMS")
+    public void confirmarSMS(@PathVariable String codigoPedido) {
+    	System.out.println(codigoPedido);
+    	fluxoPedido.confirmarSMS(codigoPedido);
+    }
+    
     @PutMapping("/cancelamento")
     public void cancelar(@PathVariable String codigoPedido) {
     	fluxoPedido.cancelar(codigoPedido);
