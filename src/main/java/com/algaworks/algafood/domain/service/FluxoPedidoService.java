@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.algaworks.algafood.domain.model.Pedido;
 import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
 import com.algaworks.algafood.domain.service.EnvioSmsService.SMS;
-import com.algaworks.algafood.infrastructure.repository.service.sms.SmsService;
+import com.algaworks.algafood.infrastructure.repository.service.email.FakeEnvioEmailService;
 
 @Service
 public class FluxoPedidoService {
@@ -29,10 +29,11 @@ public class FluxoPedidoService {
        
        var mensagem = Mensagem.builder()
     		   .assunto(pedido.getRestaurante().getNome()+ "- Pedido confirmado")
-    		   .corpo("O pedido de código <strong>"+pedido.getCodigo()+"</strong> foi confirmado!")
+    		   .corpo("pedido-confirmado.html")
+    		   .variavel("pedido", pedido)
     		   .destinatario(pedido.getCliente().getEmail())
     		   .build();
-       
+     
        envioEmailService.enviar(mensagem);
     }
     

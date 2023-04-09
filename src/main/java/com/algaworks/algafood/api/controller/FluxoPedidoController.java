@@ -22,7 +22,6 @@ public class FluxoPedidoController {
     
     @PutMapping("/confirmacao/sendSMS")
     public void confirmarSMS(@PathVariable String codigoPedido) {
-    	System.out.println(codigoPedido);
     	fluxoPedido.confirmarSMS(codigoPedido);
     }
     
