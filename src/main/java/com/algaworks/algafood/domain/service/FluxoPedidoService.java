@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.algaworks.algafood.domain.model.Pedido;
+import com.algaworks.algafood.domain.repository.PedidoRepository;
 import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
 import com.algaworks.algafood.domain.service.EnvioSmsService.SMS;
 import com.algaworks.algafood.infrastructure.repository.service.email.FakeEnvioEmailService;
@@ -16,25 +17,20 @@ public class FluxoPedidoService {
     @Autowired
     private EmissaoPedidoService emissaoPedido;
     
-    @Autowired
-    private EnvioEmailService envioEmailService;
+//    @Autowired
+//    private EnvioEmailService envioEmailService;
     
     @Autowired
     private EnvioSmsService envioSmsService;
+    
+    @Autowired
+    private PedidoRepository pedidoRepository;
       
     @Transactional
     public void confirmar(String codigoPedido) {
        Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
-       pedido.confirmar();
-       
-       var mensagem = Mensagem.builder()
-    		   .assunto(pedido.getRestaurante().getNome()+ "- Pedido confirmado")
-    		   .corpo("pedido-confirmado.html")
-    		   .variavel("pedido", pedido)
-    		   .destinatario(pedido.getCliente().getEmail())
-    		   .build();
-     
-       envioEmailService.enviar(mensagem);
+       pedido.confirmar();//emite evento aqui
+       pedidoRepository.save(pedido);//para disparar evento precisa chamar o save do repository (caracteristica spring data)  
     }
     
     @Transactional
@@ -56,7 +52,8 @@ public class FluxoPedidoService {
     @Transactional
     public void cancelar(String codigoPedido) {
        Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido); 
-       pedido.cancelar();
+       pedido.cancelar();//emite evento aqui
+       pedidoRepository.save(pedido);
     }
     
     @Transactional
