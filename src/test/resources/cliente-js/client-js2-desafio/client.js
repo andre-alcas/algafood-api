@@ -1,6 +1,6 @@
 function consultar() {
   $.ajax({
-    url: "http://api.algafood.local:8080/formas-pagamento",
+    url: "http://localhost:8080/formas-pagamento",
     type: "get",
 
     success: function(response) {
@@ -17,7 +17,7 @@ function cadastrar() {
   console.log(formaPagamentoJson);
 
   $.ajax({
-    url: "http://api.algafood.local:8080/formas-pagamento",
+    url: "http://localhost:8080/formas-pagamento",
     type: "post",
     data: formaPagamentoJson,
     contentType: "application/json",
@@ -39,7 +39,7 @@ function cadastrar() {
 }
 
 function excluir(formaPagamento) {
-  var url = "http://api.algafood.local:8080/formas-pagamento/" + formaPagamento.id;
+  var url = "http://localhost:8080/formas-pagamento/" + formaPagamento.id;
 
   $.ajax({
     url: url,
