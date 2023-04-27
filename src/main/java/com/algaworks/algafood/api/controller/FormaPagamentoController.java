@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -69,6 +70,17 @@ public class FormaPagamentoController {
         return ResponseEntity.ok()
         		.cacheControl(CacheControl.maxAge(10,TimeUnit.SECONDS))
         		.body(formaPagamentoModel);
+    }
+    
+    @GetMapping("/ultimo")
+    public ResponseEntity<?> buscarUltimo() {
+       
+    	FormaPagamento ultimo = formaPagamentoRepository.findFirstByOrderByDataAtualizacaoDesc();
+    	//OffsetDateTime ultimo = formaPagamentoRepository.getDataUltimaAtualizacao();
+       
+        return ResponseEntity.ok()
+        		.cacheControl(CacheControl.maxAge(10,TimeUnit.SECONDS))
+        		.body(ultimo.getDataAtualizacao());
     }
     
     @PostMapping
