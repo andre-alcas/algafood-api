@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.controller;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -8,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -81,6 +79,8 @@ public class FormaPagamentoController {
         return ResponseEntity.ok()
         		.cacheControl(CacheControl.maxAge(10,TimeUnit.SECONDS))
         		.body(ultimo.getDataAtualizacao());
+        
+        
     }
     
     @PostMapping
