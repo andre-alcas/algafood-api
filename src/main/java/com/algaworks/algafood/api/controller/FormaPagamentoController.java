@@ -1,5 +1,6 @@
 package com.algaworks.algafood.api.controller;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import com.algaworks.algafood.api.assembler.FormaPagamentoInputDisassembler;
 import com.algaworks.algafood.api.assembler.FormaPagamentoModelAssembler;
@@ -44,7 +47,22 @@ public class FormaPagamentoController {
     private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
     
     @GetMapping
-    public ResponseEntity<List<FormaPagamentoModel>> listar() {
+    public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
+    	
+    	ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+    	
+    	String eTag = "0";
+    	
+    	OffsetDateTime dataUltimaAtualizacao = formaPagamentoRepository.getDataUltimaAtualizacao();
+    	
+    	if(dataUltimaAtualizacao != null) {
+    		eTag = String.valueOf(dataUltimaAtualizacao.toEpochSecond());
+    	}
+    	//já temos condições de saber se continua ou não o processamento devido a comparação entre a ETag e IfnoMatch
+    	if(request.checkNotModified(eTag)) {//se eles coincidem retorna null
+    		return null;
+    	}
+    	
         List<FormaPagamento> todasFormasPagamentos = formaPagamentoRepository.findAll();
         
         List<FormaPagamentoModel> formasPagamentosModel = formaPagamentoModelAssembler
@@ -56,6 +74,7 @@ public class FormaPagamentoController {
         		.cacheControl(CacheControl.maxAge(10,TimeUnit.SECONDS).cachePublic())
 //        		.cacheControl(CacheControl.noCache())//sempre fazer validacao a cache(sempre velha)
 //        		.cacheControl(CacheControl.noStore())//ninguem pode armazenar essa informacao em cache(sem cache)
+        		.eTag(eTag)//.header("ETag", eTag)
         		.body(formasPagamentosModel);
     }
     
