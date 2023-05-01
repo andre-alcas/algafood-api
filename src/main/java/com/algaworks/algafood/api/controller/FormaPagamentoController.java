@@ -49,7 +49,7 @@ public class FormaPagamentoController {
     @GetMapping
     public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
     	
-    	ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());
+    	ShallowEtagHeaderFilter.disableContentCaching(request.getRequest());//vide WebConfig shallowEtagHeaderFilter
     	
     	String eTag = "0";
     	
