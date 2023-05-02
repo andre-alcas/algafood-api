@@ -1,6 +1,8 @@
 package com.algaworks.algafood.api.model.input;
 
 import javax.validation.constraints.NotBlank;
+
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +10,8 @@ import lombok.Setter;
 @Setter
 public class EstadoInput {
 
-		@NotBlank
-		private String nome;
-		
+	@ApiModelProperty(example = "Pará")
+	@NotBlank
+	private String nome;
+
 }
