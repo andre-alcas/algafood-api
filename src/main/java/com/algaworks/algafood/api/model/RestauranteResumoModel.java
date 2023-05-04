@@ -1,6 +1,7 @@
 package com.algaworks.algafood.api.model;
 
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,8 +11,10 @@ import lombok.Setter;
 public class RestauranteResumoModel {
 	//Restaurante DTO
 	
+	@ApiModelProperty(example = "1")
 	private Long id;
 	
+	@ApiModelProperty(example = "Restaurante Comida Caseira")
 	private String nome;
 
 }

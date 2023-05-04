@@ -1,4 +1,4 @@
-package com.algaworks.algafood.api.controller;
+package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
@@ -37,13 +37,13 @@ public interface GrupoControllerOpenApi {
 		@ApiResponse(code=400,message="ID do"+className+"inválido",response = Problem.class),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-	GrupoModel buscar(@ApiParam(value="ID de um"+className, example="1") Long grupoId);
+	GrupoModel buscar(@ApiParam(value="ID de um"+className, example="1",required=true) Long grupoId);
 
 	@ApiOperation("Adiciona um novo" + className)
 	@ApiResponses({
 		@ApiResponse(code=201,message=className+"cadastrado"),
 	})
-	GrupoModel adicionar(@ApiParam(name="corpo",value="Representação de um novo"+className) GrupoInput grupoInput);
+	GrupoModel adicionar(@ApiParam(name="corpo",value="Representação de um novo"+className,required=true) GrupoInput grupoInput);
 
 	@ApiOperation("Atualiza um"+className+"por ID")
 	@ApiResponses({
@@ -53,7 +53,7 @@ public interface GrupoControllerOpenApi {
 	GrupoModel atualizar(
 			@ApiParam(value="ID de um"+className, example="1")
 			Long grupoId, 
-			@ApiParam(name="corpo",value="Representação de um novo"+className)
+			@ApiParam(name="corpo",value="Representação de um novo"+className,required=true)
 			GrupoInput grupoInput);
 
 
@@ -62,6 +62,6 @@ public interface GrupoControllerOpenApi {
 		@ApiResponse(code=204,message=className+"excluído"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-	void remover(@ApiParam(value="ID de um"+className, example="1") Long grupoId);
+	void remover(@ApiParam(value="ID de um"+className, example="1",required=true) Long grupoId);
 
 }

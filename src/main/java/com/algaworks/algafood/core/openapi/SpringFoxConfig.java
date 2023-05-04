@@ -7,14 +7,20 @@ import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
+import com.algaworks.algafood.api.model.CozinhaModel;
+import com.algaworks.algafood.api.model.PedidoResumoModel;
+import com.algaworks.algafood.api.openapi.model.CozinhasModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.PageableModelOpenApi;
+import com.algaworks.algafood.api.openapi.model.PedidosResumoModelOpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -23,10 +29,9 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RepresentationBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.builders.ResponseBuilder;
-import springfox.documentation.builders.ResponseMessageBuilder;
+import springfox.documentation.schema.AlternateTypeRules;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Response;
-import springfox.documentation.service.ResponseMessage;
 import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
@@ -50,10 +55,36 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 			        .globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
 			        .globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
 			        .globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+//			        .globalRequestParameters(Collections.singletonList(
+//			                new RequestParameterBuilder()
+//			                        .name("campos")
+//			                        .description("Nomes das propriedades para filtrar na resposta, separados por vírgula")
+//			                        .in(ParameterType.QUERY)
+//			                        .required(true)
+//			                        .query(q -> q.model(m -> m.scalarModel(ScalarType.STRING)))
+//			                        .build())
+//			        )
 			        .additionalModels(typeResolver.resolve(Problem.class))
+			        .ignoredParameterTypes(ServletWebRequest.class)//para ignorar ServletWebRequest dos buscar por Id(exemplo: formaDePagamentoController)
 			        .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+			        .alternateTypeRules(AlternateTypeRules.newRule(
+			        		typeResolver.resolve(Page.class,CozinhaModel.class),
+			        		CozinhasModelOpenApi.class
+			        		))//substituindo Page de CozinhaModel para CozinhasModelOpenApi //Page<CozinhaModel> -> CozinhasModelOpenApi
+			        .alternateTypeRules(AlternateTypeRules.newRule(
+			        		typeResolver.resolve(Page.class,PedidoResumoModel.class),
+			        		PedidosResumoModelOpenApi.class
+			        		))
 			        .apiInfo(apiInfo())
-			        .tags(new Tag("Cidades", "Gerencia as Cidades"));
+			        .tags(
+			        		new Tag("Cidades", "Gerencia as cidades"),
+			                new Tag("Grupos", "Gerencia os grupos de usuários"),
+			                new Tag("Cozinhas", "Gerencia as cozinhas"),
+			                new Tag("Formas de Pagamento", "Gerencia as formas de pagamentos"),
+			                new Tag("Pedidos", "Gerencia os pedidos"),
+			                new Tag("Restaurantes", "Gerencia os restaurantes"),
+			                new Tag("Estados", "Gerencia os estados")
+			                );
 				//.apis(RequestHandlerSelectors.any())//busca qualquer controlador (inclusive do spring boot)
 	}
 	
