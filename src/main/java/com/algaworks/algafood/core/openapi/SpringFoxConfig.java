@@ -1,5 +1,10 @@
 package com.algaworks.algafood.core.openapi;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLStreamHandler;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -7,6 +12,7 @@ import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
@@ -65,7 +71,13 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 //			                        .build())
 //			        )
 			        .additionalModels(typeResolver.resolve(Problem.class))
-			        .ignoredParameterTypes(ServletWebRequest.class)//para ignorar ServletWebRequest dos buscar por Id(exemplo: formaDePagamentoController)
+			        .ignoredParameterTypes(ServletWebRequest.class,
+			        		URL.class,
+			        		URI.class,
+			        		URLStreamHandler.class,
+			        		Resource.class,
+			        		File.class,
+			        		InputStream.class)//para ignorar ServletWebRequest dos buscar por Id(exemplo: formaDePagamentoController)
 			        .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
 			        .alternateTypeRules(AlternateTypeRules.newRule(
 			        		typeResolver.resolve(Page.class,CozinhaModel.class),
@@ -83,7 +95,10 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 			                new Tag("Formas de Pagamento", "Gerencia as formas de pagamentos"),
 			                new Tag("Pedidos", "Gerencia os pedidos"),
 			                new Tag("Restaurantes", "Gerencia os restaurantes"),
-			                new Tag("Estados", "Gerencia os estados")
+			                new Tag("Estados", "Gerencia os estados"),
+			                new Tag("Produtos", "Gerencia os produtos de um restaurante"),
+			                new Tag("Usuários", "Gerencia os usuários"),
+			                new Tag("Estatísticas", "Estatísticas da AlgaFoodAPI")
 			                );
 				//.apis(RequestHandlerSelectors.any())//busca qualquer controlador (inclusive do spring boot)
 	}

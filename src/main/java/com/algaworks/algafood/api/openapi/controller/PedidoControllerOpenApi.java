@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.PedidoModel;
@@ -52,5 +53,5 @@ public interface PedidoControllerOpenApi {
 		@ApiResponse(code=201,message=className+"cadastrado"),
 	})
 	PedidoModel adicionar(@ApiParam(name="corpo",value="Representação de um novo"+className,required=true) PedidoInput pedidoInput);
-
+	
 }

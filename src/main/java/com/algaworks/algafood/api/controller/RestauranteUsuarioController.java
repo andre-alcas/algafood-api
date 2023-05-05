@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.model.UsuarioModel;
+import com.algaworks.algafood.api.openapi.controller.RestauranteUsuarioControllerOpenApi;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
 @RestController // @Controller //@ResponseBody
 //@RequestMapping(value = "/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequestMapping("/restaurantes/{restauranteId}/usuarios")
-public class RestauranteUsuarioController {
+public class RestauranteUsuarioController implements RestauranteUsuarioControllerOpenApi {
 
 	
 	@Autowired
