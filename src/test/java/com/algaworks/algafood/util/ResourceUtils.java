@@ -16,5 +16,5 @@ public class ResourceUtils {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 }

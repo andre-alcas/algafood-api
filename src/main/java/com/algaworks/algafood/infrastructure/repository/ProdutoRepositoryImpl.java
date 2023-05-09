@@ -11,7 +11,7 @@ import com.algaworks.algafood.domain.repository.ProdutoRepositoryQueries;
 
 @Repository
 public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
-	
+
 	@PersistenceContext
 	private EntityManager manager;
 
@@ -24,7 +24,7 @@ public class ProdutoRepositoryImpl implements ProdutoRepositoryQueries {
 	@Transactional
 	@Override
 	public void delete(FotoProduto foto) {
-		manager.remove(foto);	
+		manager.remove(foto);
 	}
-	
+
 }

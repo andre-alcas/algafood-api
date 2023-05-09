@@ -9,13 +9,13 @@ import com.algaworks.algafood.domain.model.FotoProduto;
 
 @Component
 public class FotoProdutoModelAssembler {
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	public FotoProdutoModel toModel(FotoProduto foto) {
-		
+
 		return modelMapper.map(foto, FotoProdutoModel.class);
 	}
-	
+
 }

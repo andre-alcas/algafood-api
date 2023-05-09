@@ -12,29 +12,33 @@ import com.algaworks.algafood.domain.service.FluxoPedidoService;
 @RestController
 @RequestMapping(value = "/pedidos/{codigoPedido}")
 public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
-  
+
     @Autowired
     private FluxoPedidoService fluxoPedido;
-    
-    @PutMapping("/confirmacao")
+
+    @Override
+	@PutMapping("/confirmacao")
     public void confirmar(@PathVariable String codigoPedido) {
     	fluxoPedido.confirmar(codigoPedido);
     }
-    
-    @PutMapping("/confirmacao/sendSMS")
+
+    @Override
+	@PutMapping("/confirmacao/sendSMS")
     public void confirmarSMS(@PathVariable String codigoPedido) {
     	fluxoPedido.confirmarSMS(codigoPedido);
     }
-    
-    @PutMapping("/cancelamento")
+
+    @Override
+	@PutMapping("/cancelamento")
     public void cancelar(@PathVariable String codigoPedido) {
     	fluxoPedido.cancelar(codigoPedido);
     }
-    
-    @PutMapping("/entrega")
+
+    @Override
+	@PutMapping("/entrega")
     public void entregar(@PathVariable String codigoPedido) {
     	fluxoPedido.entregar(codigoPedido);
     }
-    
-   
-}  
+
+
+}

@@ -12,11 +12,11 @@ public class CozinhaInputDisassembler {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	public Cozinha toDomainModel(CozinhaInput cozinhaInput) {
 		return modelMapper.map(cozinhaInput, Cozinha.class);
 	}
-	
+
 	public void copyToDomainObject(CozinhaInput cozinhaInput,Cozinha cozinha) {
 		modelMapper.map(cozinhaInput, cozinha);
 	}

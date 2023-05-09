@@ -14,14 +14,14 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass //todos os metodos sao estaticos, nao pode ser extendida, nao pode ter construtor
 public class ResourceUrlHelper {
-	
+
 	public static void addUriInResponseHeader(Object resourceId) {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
 				.path("/{id}")
 				.buildAndExpand(resourceId).toUri();
-				
+
 				HttpServletResponse response = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getResponse();
-				
+
 				response.setHeader(HttpHeaders.LOCATION, uri.toString());
 	}
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,23 +34,26 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 	@Autowired
 	private CadastroEstadoService cadastroEstado;
-	
+
 	@Autowired
 	private EstadoModelAssembler estadoModelAssembler;
-	
+
 	@Autowired
 	private EstadoInputDisassembler estadoInputDisassembler;
 
+	@Override
 	@GetMapping
 	public List<EstadoModel> listar() {
 		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
 
+	@Override
 	@GetMapping(value = "/{estadoId}")
 	public EstadoModel buscar(@PathVariable Long estadoId) {
 		return estadoModelAssembler.toModel(cadastroEstado.buscarOuFalhar(estadoId));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public EstadoModel adicionar(@RequestBody  @Valid EstadoInput estadoInput) {
@@ -59,6 +61,7 @@ public class EstadoController implements EstadoControllerOpenApi {
 		return estadoModelAssembler.toModel(cadastroEstado.salvar(estado));
 	}
 
+	@Override
 	@PutMapping(value = "/{estadoId}")
 	public EstadoModel atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput) {// instancia de estado com
 																						// propriedades vinda do corpo
@@ -71,6 +74,7 @@ public class EstadoController implements EstadoControllerOpenApi {
 		return estadoModelAssembler.toModel(cadastroEstado.salvar(estadoAtual));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{estadoId}")
 	public void remover(@PathVariable Long estadoId) {

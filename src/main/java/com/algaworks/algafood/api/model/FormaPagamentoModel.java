@@ -8,12 +8,12 @@ import lombok.Setter;
 @Setter
 public class FormaPagamentoModel {
 	//FormaPagamento DTO
-	
+
 	@ApiModelProperty(example = "1")
 	private Long id;
-	
+
 	@ApiModelProperty(example = "Cartão de crédito")
 	private String descricao;
-	
+
 
 }

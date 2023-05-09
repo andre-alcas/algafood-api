@@ -19,11 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.algaworks.algafood.api.assembler.UsuarioInputDisassembler;
 import com.algaworks.algafood.api.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.model.UsuarioModel;
+import com.algaworks.algafood.api.model.input.SenhaInput;
+import com.algaworks.algafood.api.model.input.UsuarioComSenhaInput;
 import com.algaworks.algafood.api.model.input.UsuarioInput;
 import com.algaworks.algafood.api.openapi.controller.UsuarioControllerOpenApi;
-import com.algaworks.algafood.api.model.input.UsuarioComSenhaInput;
-import com.algaworks.algafood.api.model.input.SenhaInput;
-import com.algaworks.algafood.domain.exception.UsuarioNaoEncontradoException;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.UsuarioRepository;
 import com.algaworks.algafood.domain.service.CadastroUsuarioService;
@@ -37,23 +36,26 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 
 	@Autowired
 	private CadastroUsuarioService cadastroUsuario;
-	
+
 	@Autowired
 	private UsuarioModelAssembler usuarioModelAssembler;
-	
+
 	@Autowired
 	private UsuarioInputDisassembler usuarioInputDisassembler;
 
+	@Override
 	@GetMapping
 	public List<UsuarioModel> listar() {
 		return usuarioModelAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 
+	@Override
 	@GetMapping(value = "/{usuarioId}")
 	public UsuarioModel buscar(@PathVariable Long usuarioId) {
 		return usuarioModelAssembler.toModel(cadastroUsuario.buscarOuFalhar(usuarioId));
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public UsuarioModel adicionar(@RequestBody  @Valid UsuarioComSenhaInput usuarioComSenhaInput) {
@@ -61,6 +63,7 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 		return usuarioModelAssembler.toModel(cadastroUsuario.salvar(usuario));
 	}
 
+	@Override
 	@PutMapping(value = "/{usuarioId}")
 	public UsuarioModel atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioInput  usuarioInput) {// instancia de usuario com
 																						// propriedades vinda do corpo
@@ -71,7 +74,8 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 
 		return usuarioModelAssembler.toModel(cadastroUsuario.salvar(usuarioAtual));
 	}
-	
+
+	@Override
 	@PutMapping("/{usuarioId}/senha")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void alterarSenha(@PathVariable Long usuarioId, @RequestBody @Valid SenhaInput senhaInput) {
@@ -79,15 +83,15 @@ public class UsuarioController implements UsuarioControllerOpenApi{
     }
 //		}
 //		try {
-//			
+//
 //			if(usuarioSenhaInput.getSenhaAtual() == usuarioAtual.getSenha()) {
 //				usuarioInputDisassembler.copyToDomainObjectPassword(usuarioSenhaInput, usuarioAtual);
 //			}
 //		}catch (Exception e) {
-//			
+//
 //		}
-		
-	
+
+
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{usuarioId}")

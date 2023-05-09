@@ -17,28 +17,28 @@
 //
 //	@PersistenceContext
 //	private EntityManager manager;
-//	
+//
 //	@Override
 //	public List<Estado> listar(){
-//		
+//
 //		TypedQuery<Estado> query = manager.createQuery("from Estado",Estado.class);
-//		
+//
 //		return query.getResultList();
-//		
+//
 //	}
-//	
+//
 //	@Override
 //	public Estado consultarId(Long id) {
 //		return manager.find(Estado.class, id);//select from where id == id
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public Estado adicionar(Estado estado) {
-//		
+//
 //		return manager.merge(estado);//retorna a instancia persistida
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public void remover(Long id) {

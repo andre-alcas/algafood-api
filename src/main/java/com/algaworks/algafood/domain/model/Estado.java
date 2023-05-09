@@ -20,13 +20,13 @@ import lombok.EqualsAndHashCode;
 @Entity
 //@Table (name="tab_cozinhas") //2a opção
 public class Estado {
-	
+
 	@NotNull(groups = {Groups.EstadoId.class})
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;

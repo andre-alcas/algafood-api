@@ -24,7 +24,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 //@Table (name="tab_cozinhas") //2a opção
 public class Grupo {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -32,14 +32,14 @@ public class Grupo {
 
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "grupo_permissao", 
+	@JoinTable(name = "grupo_permissao",
 			joinColumns = @JoinColumn(name = "grupo_id"),
 			inverseJoinColumns = @JoinColumn(name = "permissao_id"))
 	private Set<Permissao> permissoes = new HashSet<>();
-	
+
 	public boolean removerPermissao(Permissao permissao) {
 	    return getPermissoes().remove(permissao);
 	}

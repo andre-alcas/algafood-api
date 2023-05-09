@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiResponses;
 public interface CozinhaControllerOpenApi {
 
 	final static String className = " cozinha ";
-	
+
 	@ApiOperation(value="Lista as"+className+"s com paginação")
 	Page<CozinhaModel> listar(Pageable pageable);
 
@@ -41,7 +41,7 @@ public interface CozinhaControllerOpenApi {
 	})
 	CozinhaModel atualizar(
 			@ApiParam(value="ID de uma"+className, example="1")
-			Long cozinhaId, 
+			Long cozinhaId,
 			@ApiParam(name="corpo",value="Representação de uma nova"+className,required=true)
 			CozinhaInput cozinhaInput);
 

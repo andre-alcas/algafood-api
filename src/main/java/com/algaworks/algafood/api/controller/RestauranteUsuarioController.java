@@ -23,29 +23,32 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 @RequestMapping("/restaurantes/{restauranteId}/usuarios")
 public class RestauranteUsuarioController implements RestauranteUsuarioControllerOpenApi {
 
-	
+
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;
-	
+
 	@Autowired
 	private UsuarioModelAssembler usuarioModelAssembler;
-	
+
+	@Override
 	@GetMapping
 	public List<UsuarioModel> listar(@PathVariable Long restauranteId) {
 		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		return usuarioModelAssembler.toCollectionModel(restaurante.getUsuarios());
 	}
-	
+
+	@Override
 	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void desassociar(@PathVariable Long restauranteId, @PathVariable Long usuarioId ) {
 		cadastroRestaurante.desassociarUsuario(restauranteId, usuarioId);
 	}
-	
+
+	@Override
 	@PutMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void associar(@PathVariable Long restauranteId, @PathVariable Long usuarioId ) {
 		cadastroRestaurante.associarUsuario(restauranteId, usuarioId);
 	}
-	
+
 }

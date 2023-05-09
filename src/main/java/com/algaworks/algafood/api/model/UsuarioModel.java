@@ -8,15 +8,15 @@ import lombok.Setter;
 @Setter
 public class UsuarioModel {
 	//Grupo DTO
-	
+
 	@ApiModelProperty(example = "1")
 	private Long id;
-	
+
 	@ApiModelProperty(example = "Andre Siqueira")
 	private String nome;
-	
+
 	@ApiModelProperty(example = "usuario@gmail.com")
 	private String email;
-	
+
 
 }

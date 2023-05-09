@@ -36,81 +36,81 @@ import com.algaworks.algafood.domain.repository.PedidoRepository;
 import com.algaworks.algafood.domain.service.EmissaoPedidoService;
 import com.algaworks.algafood.infrastructure.repository.spec.PedidoSpecs;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-
 @RestController
 @RequestMapping(value = "/pedidos")
 public class PedidoController implements PedidoControllerOpenApi {
 
     @Autowired
     private PedidoRepository pedidoRepository;
-    
+
     @Autowired
     private EmissaoPedidoService emissaoPedido;
-    
+
     @Autowired
     private PedidoModelAssembler pedidoModelAssembler;
-    
+
     @Autowired
     private PedidoResumoModelAssembler pedidoResumoModelAssembler;
-    
+
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
-    
-   
-    @GetMapping
+
+
+    @Override
+	@GetMapping
     public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,@PageableDefault(size=10) Pageable pageable) {
-    	
+
     	pageable = traduzirPageable(pageable);
-    	
+
     	Page<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro),pageable);
-        
+
     	List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(todosPedidos.getContent());
     	//todosPedidos.getContent() contem uma lista de pedidos paginados
-    	
+
     	Page<PedidoResumoModel> pedidosModelPage = new PageImpl<>(pedidosModel, pageable, todosPedidos.getTotalElements());
-    	
+
         return pedidosModelPage;
     }
-    
+
 //  @GetMapping
 //  public List<PedidoResumoModel> listar() {
 //      List<Pedido> todosPedidos = pedidoRepository.findAll();
-//      
+//
 //      return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
 //  }
-    
-  
+
+
 //    @GetMapping
 //    public MappingJacksonValue listar(@RequestParam(required = false) String filtros) {
 //        List<Pedido> todosPedidos = pedidoRepository.findAll();
-//        
+//
 //        List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
-//        
+//
 //        MappingJacksonValue pedidosWrapper = new MappingJacksonValue(pedidosModel);
-//        
+//
 //        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
 //        filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.serializeAll());
 //        //filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept("codigo","valorTotal"));
-//        
+//
 //        if(StringUtils.isNotBlank(filtros)) {
 //        	filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept(filtros.split(",")));
 //        }
-//        
+//
 //		pedidosWrapper.setFilters(filterProvider );
-//        
+//
 //        return pedidosWrapper;
 //    }
-    
-    @GetMapping("/{codigoPedido}")
+
+    @Override
+	@GetMapping("/{codigoPedido}")
     public PedidoModel buscar(@PathVariable String codigoPedido) {
         Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
-        
+
         return pedidoModelAssembler.toModel(pedido);
     }
-    
-    @PostMapping
+
+    @Override
+	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PedidoModel adicionar(@Valid @RequestBody PedidoInput pedidoInput) {
         try {
@@ -127,7 +127,7 @@ public class PedidoController implements PedidoControllerOpenApi {
             throw new NegocioException(e.getMessage(), e);
         }
     }
-    
+
     private Pageable traduzirPageable(Pageable pageable) {
     	var mapeamento = Map.of(
     			"codigo","codigo",
@@ -135,7 +135,7 @@ public class PedidoController implements PedidoControllerOpenApi {
     			"restaurante.nome","restaurante.nome",
     			"valorTotal","valorTotal"
     			);
-    	
+
     	return PageableTranslator.translate(pageable, mapeamento);
     }
-}  
+}

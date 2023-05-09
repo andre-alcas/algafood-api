@@ -2,8 +2,6 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -21,7 +19,7 @@ import io.swagger.annotations.ApiResponses;
 public interface FormasPagamentoControllerOpenApi {
 
 	final static String className = " forma de pagamento ";
-	
+
 	@ApiOperation(value="Lista as"+className+"s")
 	ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request);
 
@@ -45,7 +43,7 @@ public interface FormasPagamentoControllerOpenApi {
 	})
 	FormaPagamentoModel atualizar(
 			@ApiParam(value="ID de uma"+className, example="1")
-			Long formaPagamentoId, 
+			Long formaPagamentoId,
 			@ApiParam(name="corpo",value="Representação de uma nova"+className,required=true)
 			FormaPagamentoInput formaPagamentoInput);
 

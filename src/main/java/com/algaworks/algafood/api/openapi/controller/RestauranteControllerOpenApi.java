@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiResponses;
 public interface RestauranteControllerOpenApi {
 
 	final static String className = " restaurante ";
-	
+
 	@ApiOperation(value="Lista os"+className+"s", response=RestauranteBasicoModelOpenApi.class)//para quando usar JsonView
 	@ApiImplicitParams({
 		@ApiImplicitParam(value="Nome da projeção de pedidos", allowableValues = "apenas-nome",
 				name="projecao",paramType = "query",type="string")
 	})
 	List<RestauranteModel> listar();
-	
+
 	@ApiOperation(value = "Lista restaurantes", hidden = true)
 	List<RestauranteModel> listarApenasNomes();
 
@@ -50,7 +50,7 @@ public interface RestauranteControllerOpenApi {
 	})
 	RestauranteModel atualizar(
 			@ApiParam(value="ID de um"+className, example="1")
-			Long restauranteId, 
+			Long restauranteId,
 			@ApiParam(name="corpo",value="Representação de um novo"+className,required=true)
 			RestauranteInput restauranteInput);
 
@@ -61,42 +61,42 @@ public interface RestauranteControllerOpenApi {
 		@ApiResponse(code=404,message=className+"não encontrado(s)",response = Problem.class),
 	})
 	void inativarMuitos(@ApiParam(value="ID de um ou mais"+className+"s", example="[1,2,3]",required=true) List<Long> restauranteIds);
-	
+
 	@ApiOperation("Ativa um ou mais"+className+"s")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"ativado(s) com sucesso"),
 		@ApiResponse(code=404,message=className+"não encontrado(s)",response = Problem.class),
 	})
 	void ativarMuitos(@ApiParam(value="ID de um ou mais"+className+"s", example="[1,2,3]",required=true) List<Long> restauranteIds);
-	
+
 	@ApiOperation("Ativa um"+className+"por ID")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"ativado com sucesso"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
 	void ativar(@ApiParam(value="ID de um"+className, example="1") Long restauranteId);
-	
+
 	@ApiOperation("Inativa um"+className+"por ID")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"inativado com sucesso"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
 	void inativar(@ApiParam(value="ID de um"+className, example="1") Long restauranteId);
-	
-	
+
+
 	@ApiOperation("Abre um"+className+"por ID")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"aberto com sucesso"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
 	void abertura(@ApiParam(value="ID de um"+className, example="1") Long restauranteId) ;
-	
-	
+
+
 	@ApiOperation("Fecha um"+className+"por ID")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"fechado com sucesso"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
 	void fechamento(@ApiParam(value="ID de um"+className, example="1") Long restauranteId);
-		
+
 }

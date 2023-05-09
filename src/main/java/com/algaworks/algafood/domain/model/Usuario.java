@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 //@Table (name="tab_cozinhas") //2a opção
 public class Usuario {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -41,19 +41,19 @@ public class Usuario {
 
 	@Column(nullable = false)
 	private String senha;
-	
+
 	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")//datetime pra nao considerar os milisegundos
 	private OffsetDateTime dataCadastro;
-	
+
 	@JsonIgnore
 	@ManyToMany
-	@JoinTable(name = "usuario_grupo", 
+	@JoinTable(name = "usuario_grupo",
 			joinColumns = @JoinColumn(name = "usuario_id"),
 			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
 	private Set<Grupo> grupos = new HashSet<>();
-	
+
 	public boolean senhaCoincideCom(String senha) {
 	    return getSenha().equals(senha);
 	}
@@ -61,7 +61,7 @@ public class Usuario {
 	public boolean senhaNaoCoincideCom(String senha) {
 	    return !senhaCoincideCom(senha);
 	}
-	
+
 	public boolean removerGrupo(Grupo grupo) {
 	    return getGrupos().remove(grupo);
 	}

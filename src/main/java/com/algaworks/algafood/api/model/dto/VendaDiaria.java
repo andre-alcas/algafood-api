@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VendaDiaria {
-	
+
 	private Date data;
 	private Long totalVendas;
 	private BigDecimal totalFaturado;

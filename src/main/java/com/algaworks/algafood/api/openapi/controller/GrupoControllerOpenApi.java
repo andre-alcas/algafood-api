@@ -2,18 +2,6 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.GrupoModel;
 import com.algaworks.algafood.api.model.input.GrupoInput;
@@ -28,7 +16,7 @@ import io.swagger.annotations.ApiResponses;
 public interface GrupoControllerOpenApi {
 
 	final static String className = " grupo ";
-	
+
 	@ApiOperation(value="Lista os"+className+"s")
 	List<GrupoModel> listar();
 
@@ -52,7 +40,7 @@ public interface GrupoControllerOpenApi {
 	})
 	GrupoModel atualizar(
 			@ApiParam(value="ID de um"+className, example="1")
-			Long grupoId, 
+			Long grupoId,
 			@ApiParam(name="corpo",value="Representação de um novo"+className,required=true)
 			GrupoInput grupoInput);
 

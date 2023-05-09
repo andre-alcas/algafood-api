@@ -38,23 +38,23 @@ public class CadastroRestauranteIT {
 
 	@LocalServerPort
 	private int port;
-	
+
 	@Autowired
 	private DatabaseCleaner databaseCleaner;
-	
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+
 	private String jsonRestauranteCorreto;
 	private String jsonRestauranteSemFrete;
 	private String jsonRestauranteSemCozinha;
 	private String jsonRestauranteComCozinhaInexistente;
-	
+
 	private Restaurante burgerTopRestaurante;
-	
+
 	@Before
 	public void setUp() {
 		RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
@@ -63,20 +63,20 @@ public class CadastroRestauranteIT {
 
 		jsonRestauranteCorreto = ResourceUtils.getContentFromResource(
 				"/json/correto/restaurante-new-york-barbecue.json");
-		
+
 		jsonRestauranteSemFrete = ResourceUtils.getContentFromResource(
 				"/json/incorreto/restaurante-new-york-barbecue-sem-frete.json");
-		
+
 		jsonRestauranteSemCozinha = ResourceUtils.getContentFromResource(
 				"/json/incorreto/restaurante-new-york-barbecue-sem-cozinha.json");
-		
+
 		jsonRestauranteComCozinhaInexistente = ResourceUtils.getContentFromResource(
 				"/json/incorreto/restaurante-new-york-barbecue-com-cozinha-inexistente.json");
-		
+
 		databaseCleaner.clearTables();
 		prepararDados();
 	}
-	
+
 	@Test
 	public void deveRetornarStatus200_QuandoConsultarRestaurantes() {
 		given()
@@ -86,7 +86,7 @@ public class CadastroRestauranteIT {
 		.then()
 			.statusCode(HttpStatus.OK.value());
 	}
-	
+
 	@Test
 	public void deveRetornarStatus201_QuandoCadastrarRestaurante() {
 		given()
@@ -98,7 +98,7 @@ public class CadastroRestauranteIT {
 		.then()
 			.statusCode(HttpStatus.CREATED.value());
 	}
-	
+
 	@Test
 	public void deveRetornarStatus400_QuandoCadastrarRestauranteSemTaxaFrete() {
 		given()
@@ -124,7 +124,7 @@ public class CadastroRestauranteIT {
 			.statusCode(HttpStatus.BAD_REQUEST.value())
 			.body("title", equalTo(DADOS_INVALIDOS_PROBLEM_TITLE));
 	}
-	
+
 	@Test
 	public void deveRetornarStatus400_QuandoCadastrarRestauranteComCozinhaInexistente() {
 		given()
@@ -137,7 +137,7 @@ public class CadastroRestauranteIT {
 			.statusCode(HttpStatus.BAD_REQUEST.value())
 			.body("title", equalTo(VIOLACAO_DE_REGRA_DE_NEGOCIO_PROBLEM_TYPE));
 	}
-	
+
 	@Test
 	public void deveRetornarRespostaEStatusCorretos_QuandoConsultarRestauranteExistente() {
 		given()
@@ -149,7 +149,7 @@ public class CadastroRestauranteIT {
 			.statusCode(HttpStatus.OK.value())
 			.body("nome", equalTo(burgerTopRestaurante.getNome()));
 	}
-	
+
 	@Test
 	public void deveRetornarStatus404_QuandoConsultarRestauranteInexistente() {
 		given()
@@ -160,7 +160,7 @@ public class CadastroRestauranteIT {
 		.then()
 			.statusCode(HttpStatus.NOT_FOUND.value());
 	}
-	
+
 	private void prepararDados() {
 		Cozinha cozinhaBrasileira = new Cozinha();
 		cozinhaBrasileira.setNome("Brasileira");
@@ -169,18 +169,18 @@ public class CadastroRestauranteIT {
 		Cozinha cozinhaAmericana = new Cozinha();
 		cozinhaAmericana.setNome("Americana");
 		cozinhaRepository.save(cozinhaAmericana);
-		
+
 		burgerTopRestaurante = new Restaurante();
 		burgerTopRestaurante.setNome("Burger Top");
 		burgerTopRestaurante.setTaxaFrete(new BigDecimal(10));
 		burgerTopRestaurante.setCozinha(cozinhaAmericana);
 		restauranteRepository.save(burgerTopRestaurante);
-		
+
 		Restaurante comidaMineiraRestaurante = new Restaurante();
 		comidaMineiraRestaurante.setNome("Comida Mineira");
 		comidaMineiraRestaurante.setTaxaFrete(new BigDecimal(10));
 		comidaMineiraRestaurante.setCozinha(cozinhaBrasileira);
 		restauranteRepository.save(comidaMineiraRestaurante);
 	}
-	
+
 }

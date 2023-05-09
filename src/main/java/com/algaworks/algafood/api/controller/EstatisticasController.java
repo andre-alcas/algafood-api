@@ -20,22 +20,24 @@ import com.algaworks.algafood.domain.service.VendaReportService;
 @RestController
 @RequestMapping("/estatisticas")
 public class EstatisticasController implements EstatisticasControllerOpenApi {
-	
+
 	@Autowired
 	private VendaQueryService vendaQueryService;
-	
+
 	@Autowired
 	private VendaReportService vendaReportService;
-	
+
+	@Override
 	@GetMapping(path = "/vendas-diarias",produces= MediaType.APPLICATION_JSON_VALUE)
-	public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, @RequestParam(required=false, defaultValue= "+00:00") String timeOffset) {		
+	public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filtro, @RequestParam(required=false, defaultValue= "+00:00") String timeOffset) {
 		return vendaQueryService.consultarVendasDiarias(filtro,timeOffset);
 	}
-	
+
+	@Override
 	@GetMapping(path = "/vendas-diarias",produces= MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro, @RequestParam(required=false, defaultValue= "+00:00") String timeOffset) {		
+	public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro, @RequestParam(required=false, defaultValue= "+00:00") String timeOffset) {
 		byte[] bytesPdf = vendaReportService.emitirVendasDiarias(filtro, timeOffset);
-		
+
 		var headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=vendas-diarias.pdf");//conteudo é pra ser baixado pelo cliente e nao exibido
 		return ResponseEntity.ok()

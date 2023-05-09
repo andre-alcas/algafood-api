@@ -19,21 +19,21 @@ public class StorageConfig {
 
 	@Autowired
 	private StorageProperties storageProperties;
-	
+
 	@Bean
 	@ConditionalOnProperty(name = "algafood.storage.tipo", havingValue = "S3")
 	public AmazonS3 amazonS3() {
-		
+
 		var credentials = new BasicAWSCredentials(
-				storageProperties.getS3().getIdChaveAcesso(), 
+				storageProperties.getS3().getIdChaveAcesso(),
 				storageProperties.getS3().getChaveAcessoSecreta());
-		
+
 		return AmazonS3ClientBuilder.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(credentials))
 				.withRegion(storageProperties.getS3().getRegiao())
 				.build();
 	}
-	
+
 	@Bean
 	public FotoStorageService fotoStorageService() {
 		if(TipoStorage.S3.equals(storageProperties.getTipo())) {

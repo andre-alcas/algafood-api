@@ -15,10 +15,10 @@ import lombok.Setter;
 @Component
 @ConfigurationProperties("algafood.sms")
 public class SmsProperties {
-	
+
 	@NotNull
 	private String sid;
-	
+
 	@NotNull
 	private String token;
 

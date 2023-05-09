@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.controller;
 import java.util.List;
 
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,10 +35,10 @@ public class GrupoController implements GrupoControllerOpenApi {
 
 	@Autowired
 	private CadastroGrupoService cadastroGrupo;
-	
+
 	@Autowired
 	private GrupoModelAssembler grupoModelAssembler;
-	
+
 	@Autowired
 	private GrupoInputDisassembler grupoInputDisassembler;
 

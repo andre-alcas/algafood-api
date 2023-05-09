@@ -12,12 +12,12 @@ public class PermissaoInputDisassembler {
 
     @Autowired
     private ModelMapper modelMapper;
-    
+
     public Permissao toDomainObject(PermissaoInput permissaoInput) {
         return modelMapper.map(permissaoInput, Permissao.class);
     }
-    
+
     public void copyToDomainObject(PermissaoInput permissaoInput, Permissao permissao) {
         modelMapper.map(permissaoInput, permissao);
-    }   
+    }
 }

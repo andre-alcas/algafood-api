@@ -15,18 +15,18 @@ public class PedidoFilter {
 
 	@ApiModelProperty(example = "1", value = "ID do cliente para filtro da pesquisa")
 	private Long clienteId;
-	
+
 	@ApiModelProperty(example = "1", value = "ID do restaurante para filtro da pesquisa")
 	private Long restauranteId;
-	
+
 	@ApiModelProperty(example = "2023-05-03T00:00:00Z",
 	        value = "Data/hora de criação inicial para filtro da pesquisa")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dataCriacaoInicio;
-	
+
 	@ApiModelProperty(example = "2023-05-03T00:00:00Z",
 	        value = "Data/hora de criação inicial para filtro da pesquisa")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime dataCriacaoFim;
-	
+
 }

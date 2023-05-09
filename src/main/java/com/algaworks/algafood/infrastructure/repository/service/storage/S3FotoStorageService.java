@@ -1,16 +1,8 @@
 package com.algaworks.algafood.infrastructure.repository.service.storage;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
-import org.aspectj.weaver.patterns.WithinCodeAnnotationPointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 
 import com.algaworks.algafood.core.storage.StorageProperties;
 import com.algaworks.algafood.domain.service.FotoStorageService;
@@ -27,64 +19,64 @@ public class S3FotoStorageService implements FotoStorageService {
 
 	@Autowired
 	private StorageProperties storageProperties;
-	
+
 	@Autowired
 	private AmazonS3 amazonS3;
-	
+
 	@Override
 	public void armazenar(NovaFoto novaFoto) {
-		
+
 		try {
 			String caminhoArquivo = getCaminhoArquivo(novaFoto.getNomeArquivo());
-			
+
 			var objectMetadata = new ObjectMetadata();
 			objectMetadata.setContentType(novaFoto.getContentType());
-			
+
 			var putObjectRequest = new PutObjectRequest(
-					storageProperties.getS3().getBucket(), 
-					caminhoArquivo, 
+					storageProperties.getS3().getBucket(),
+					caminhoArquivo,
 					novaFoto.getInputStream(),
 					objectMetadata
 					).withCannedAcl(CannedAccessControlList.PublicRead);
-			
+
 			amazonS3.putObject(putObjectRequest);
 		} catch (Exception e) {
 			throw new StorageException("Não foi possível enviar arquivo para Amazon S3.", e);
 		}
-		
+
 	}
 
 	@Override
 	public void remover(String nomeArquivo) {
 		try {
-			
+
 			String caminhoArquivo = getCaminhoArquivo(nomeArquivo);
 			var deleteObjectRequest = new DeleteObjectRequest(
-					storageProperties.getS3().getBucket(), 
+					storageProperties.getS3().getBucket(),
 					caminhoArquivo);
 			amazonS3.deleteObject(deleteObjectRequest);
-			
+
 		}catch (Exception e) {
 			throw new StorageException("Não foi possível excluir arquivo para Amazon S3.", e);
 		}
-		
+
 	}
 
 	@Override
 	public FotoRecuperada recuperar(String nomeArquivo) {
-		
+
 		String caminhoArquivo = getCaminhoArquivo(nomeArquivo);
-		
+
 		URL url = amazonS3.getUrl(storageProperties.getS3().getBucket(), caminhoArquivo);
-		
+
 		return FotoRecuperada.builder()
 				.url(url.toString())
 				.build();
 	}
-	
+
 	private String getCaminhoArquivo(String nomeArquivo) {
 		return String.format("%s/%s", storageProperties.getS3().getDiretorioFotos(), nomeArquivo);
-	
+
 	}
 
 }

@@ -36,7 +36,7 @@ public interface UsuarioControllerOpenApi {
     UsuarioModel adicionar(
             @ApiParam(name = "corpo", value = "Representação de um novo usuário", required = true)
             UsuarioComSenhaInput usuarioInput);
-    
+
     @ApiOperation("Atualiza um usuário por ID")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Usuário atualizado"),
@@ -45,7 +45,7 @@ public interface UsuarioControllerOpenApi {
     UsuarioModel atualizar(
             @ApiParam(value = "ID do usuário", example = "1", required = true)
             Long usuarioId,
-            
+
             @ApiParam(name = "corpo", value = "Representação de um usuário com os novos dados",
                 required = true)
             UsuarioInput usuarioInput);
@@ -58,8 +58,8 @@ public interface UsuarioControllerOpenApi {
     void alterarSenha(
             @ApiParam(value = "ID do usuário", example = "1", required = true)
             Long usuarioId,
-            
-            @ApiParam(name = "corpo", value = "Representação de uma nova senha", 
+
+            @ApiParam(name = "corpo", value = "Representação de uma nova senha",
                 required = true)
             SenhaInput senha);
 }

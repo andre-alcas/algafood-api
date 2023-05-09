@@ -21,17 +21,17 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 //@RequestMapping(value = "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequestMapping("/teste")
 public class TesteController {
-	
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+
 //	@Autowired
 //	private CadastroCozinhaService cadastroCozinha;
-	
-	
+
+
 	@GetMapping("/cozinhas/por-nome") // (produces=
 	// {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
 	// retorna jason e xml, mas dá pra escolher o que produzir(formato)
@@ -43,12 +43,12 @@ public class TesteController {
 	public Optional<Cozinha> cozinhaPorNome(@RequestParam("nome") String nome) {
 		return cozinhaRepository.findByNome(nome);
 	}
-	
+
 	@GetMapping("/cozinhas/exists")
 	public boolean cozinhaExists(@RequestParam("nome") String nome) {
 		return cozinhaRepository.existsByNome(nome);
 	}
-	
+
 	@GetMapping("/cozinhas/primeira")
 	public Optional<Cozinha> cozinhaPrimeiro() {
 		return cozinhaRepository.buscarPrimeiro();
@@ -59,7 +59,7 @@ public class TesteController {
 		return restauranteRepository.findByTaxaFreteBetween(taxaInicial, taxaFinal);
 	}
 	//localhost:8080/teste/restaurantes/por-taxa-frete?taxaInicial=1&taxaFinal=20
-	
+
 	@GetMapping("/restaurantes/por-nome")
 	public List<Restaurante> restaurantesPorNome(String nome, Long cozinhaId) {
 		return restauranteRepository.consultarPorNome(nome, cozinhaId);
@@ -68,7 +68,7 @@ public class TesteController {
 	public Optional<Restaurante> restaurantePrimeiroPorNome(String nome) {
 		return restauranteRepository.findFirstRestauranteByNomeContaining(nome);
 	}
-	
+
 	@GetMapping("/restaurantes/top2-por-nome")
 	public List<Restaurante> restaurantesTop2PorNome(String nome) {
 		return restauranteRepository.findTop2ByNomeContaining(nome);
@@ -77,17 +77,17 @@ public class TesteController {
 	public int restaurantesCountPorCozinha(Long cozinhaId) {
 		return restauranteRepository.countByCozinhaId(cozinhaId);
 	}
-	
+
 	@GetMapping("/restaurantes/por-nome-e-frete")
 	public List<Restaurante> restaurantesPorNomeFrete(String nome, BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
 		return restauranteRepository.find(nome, taxaFreteInicial, taxaFreteFinal);
 	}
-	
+
 	@GetMapping("/restaurantes/com-frete-gratis")
 	public List<Restaurante> restaurantesComFreteGratis(String nome) {
 		return restauranteRepository.findComFreteGratis(nome);
 	}
-	
+
 	@GetMapping("/restaurantes/primeiro")
 	public Optional<Restaurante> restaurantePrimeiro() {
 		return restauranteRepository.buscarPrimeiro();

@@ -35,20 +35,21 @@ import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 @RestController //@Controller //@ResponseBody
 @RequestMapping(value = "/cozinhas")
 public class CozinhaController implements CozinhaControllerOpenApi {
-	
+
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
-	
+
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
-	
+
 	@Autowired
 	private CozinhaModelAssembler cozinhaModelAssembler;
-	
+
 	@Autowired
 	private CozinhaInputDisassembler cozinhaInputDisassembler;
-	
+
 	//@GetMapping//(produces= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} ) //retorna jason e xml, mas dá pra escolher o que produzir(formato)
+	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public Page<CozinhaModel> listar(@PageableDefault(size=10) Pageable pageable){
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
@@ -56,10 +57,11 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		Page<CozinhaModel> cozinhasModelPage = new PageImpl<>(cozinhasModel,pageable,cozinhasPage.getTotalElements());
 		return cozinhasModelPage;
 	}
-	
+
+	@Override
 	@GetMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
-		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);		
+		Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		return cozinhaModelAssembler.toModel(cozinha);
 		//return cadastroCozinha.buscarOuFalhar(cozinhaId);
 	}
@@ -72,6 +74,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 //		//return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 //		return ResponseEntity.notFound().build();
 //	}
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public CozinhaModel adicionar(@RequestBody @Valid CozinhaInput cozinhaInput) {//instancia de cozinha com propriedades vinda do corpo da requisição
@@ -84,31 +87,32 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		//return cadastroCozinha.salvar(cozinha);//retornar no corpo da resposta o recurso
 	}
 
+	@Override
 	@PutMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel atualizar(@PathVariable Long cozinhaId, @RequestBody  @Valid CozinhaInput cozinhaInput) {//instancia de cozinha com propriedades vinda do corpo da requisição
-		
+
 		try {
 			Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
-			
+
 			cozinhaInputDisassembler.copyToDomainObject(cozinhaInput, cozinhaAtual);
-			
+
 			return cozinhaModelAssembler.toModel(cadastroCozinha.salvar(cozinhaAtual));
-			
+
 		}catch (EntidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
-		
+
 		}
 		//Cozinha cozinhaAtual =  cadastroCozinha.buscarOuFalhar(cozinhaId);
-		
+
 		//BeanUtils.copyProperties(cozinha, cozinhaAtual,"id");
-		
+
 		//return cadastroCozinha.salvar(cozinhaAtual);
 	}
 //	@ResponseStatus(HttpStatus.OK)
 //	@PutMapping(value = "/{cozinhaId}")
 //	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {//instancia de cozinha com propriedades vinda do corpo da requisição
 //		Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId).orElse(null);
-//		
+//
 //		if(cozinhaAtual != null) {
 //			//cozinhaAtual.setNome(cozinha.getNome());
 //			BeanUtils.copyProperties(cozinha, cozinhaAtual,"id");//ignorar copia de Id
@@ -118,6 +122,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 //		}
 //		return ResponseEntity.notFound().build();
 //	}
+	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{cozinhaId}", produces = {})
 	public void remover(@PathVariable Long cozinhaId) {//instancia de cozinha com propriedades vinda do corpo da requisição
@@ -125,7 +130,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	}
 	/*
 	 * @ResponseStatus(HttpStatus.OK)
-	 * 
+	 *
 	 * @DeleteMapping(value = "/{cozinhaId}") public ResponseEntity<?>
 	 * remover(@PathVariable Long cozinhaId) {//instancia de cozinha com
 	 * propriedades vinda do corpo da requisição try {
@@ -135,8 +140,8 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	 * ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado");
 	 * }catch(EntidadeEmUsoException e){ return
 	 * ResponseEntity.status(HttpStatus.CONFLICT).build(); } }
-	 * 
-	 */	
+	 *
+	 */
 	/*
 	    @GetMapping(value = "/{cozinhaId}")
 	    public Cozinha buscar(@PathVariable Long cozinhaId) {

@@ -7,8 +7,6 @@ import java.util.concurrent.TimeUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +47,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 	@Autowired
 	private FormaPagamentoInputDisassembler formaPagamentoInputDisassembler;
 
+	@Override
 	@GetMapping
 	public ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request) {
 
@@ -71,7 +70,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 
 		List<FormaPagamentoModel> formasPagamentosModel = formaPagamentoModelAssembler
 				.toCollectionModel(todasFormasPagamentos);
-		;
+
 
 		return ResponseEntity.ok()
 //        		.cacheControl(CacheControl.maxAge(10,TimeUnit.SECONDS))
@@ -83,6 +82,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 				.body(formasPagamentosModel);
 	}
 
+	@Override
 	@GetMapping("/{formaPagamentoId}")
 	public ResponseEntity<FormaPagamentoModel> buscar(@PathVariable Long formaPagamentoId, ServletWebRequest request) {
 
@@ -109,6 +109,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 				.body(formaPagamentoModel);
 	}
 
+	@Override
 	@GetMapping("/ultimo")
 	public ResponseEntity<?> buscarUltimo() {
 
@@ -120,6 +121,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 
 	}
 
+	@Override
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public FormaPagamentoModel adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
@@ -130,6 +132,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 		return formaPagamentoModelAssembler.toModel(formaPagamento);
 	}
 
+	@Override
 	@PutMapping("/{formaPagamentoId}")
 	public FormaPagamentoModel atualizar(@PathVariable Long formaPagamentoId,
 			@RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
@@ -142,6 +145,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
 		return formaPagamentoModelAssembler.toModel(formaPagamentoAtual);
 	}
 
+	@Override
 	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long formaPagamentoId) {

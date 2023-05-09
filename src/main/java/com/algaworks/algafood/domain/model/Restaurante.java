@@ -22,13 +22,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.algaworks.algafood.core.validation.Groups;
 import com.algaworks.algafood.core.validation.ValorZeroIncluiDescricao;
 
 import lombok.Data;
@@ -41,13 +38,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Restaurante {
-	
-	
+
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
+
 	//@NotNull //aceita espaço em branco
 	//@NotEmpty //não aceita 1 espaço em branco, mas aceita vários
 	//não aceita 1 espaço em branco e nem aceita vários
@@ -55,7 +52,7 @@ public class Restaurante {
 	@NotBlank//(message =  "Nome é obrigatório")
 	@Column(nullable = false)
 	private String nome;
-	
+
 	//@DecimalMin("1")
 	@NotNull
 	@PositiveOrZero//(message= "{TaxaFrete.invalida}")
@@ -63,7 +60,7 @@ public class Restaurante {
 	//@Multiplo(numero=5)
 	@Column(nullable = false)
 	private BigDecimal taxaFrete;
-	
+
 	@Valid
 	//@NotNull(groups = {Groups.CadastroRestaurante.class})
 	@NotNull
@@ -71,38 +68,38 @@ public class Restaurante {
 	@ManyToOne//(fetch = FetchType.LAZY) //estrategia eager loading
 	@JoinColumn(name= "cozinha_id",nullable = false) //forma de nomear a chave estrangeira criada. o padrão é cozinha_id
 	private Cozinha cozinha;
-	
+
 	@Embedded //essa classe está incoporada em outro lugar e sendo incorporada pra dentro de restaurante
 	private Endereco endereco;
-	
-	
+
+
 	private Boolean ativo = Boolean.TRUE;
-	
+
 	private Boolean aberto = Boolean.FALSE;
-	
+
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataCadastro;
-	
+
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "datetime")
 	private OffsetDateTime dataAtualizacao;
-	
+
 	@ManyToMany //por padrao usa Lazy Loading
-	@JoinTable(name = "restaurante_forma_pagamento", 
+	@JoinTable(name = "restaurante_forma_pagamento",
 			joinColumns = @JoinColumn(name = "restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
 	private Set<FormaPagamento> formasPagamento = new HashSet<>();
 
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
-	
+
 	@ManyToMany //por padrao usa Lazy Loading
-	@JoinTable(name = "restaurante_usuario_responsavel", 
+	@JoinTable(name = "restaurante_usuario_responsavel",
 			joinColumns = @JoinColumn(name = "restaurante_id"),
 			inverseJoinColumns = @JoinColumn(name = "usuario_id"))
 	private Set<Usuario> usuarios = new HashSet<>();
-	
+
 	public void ativar() {
 		setAtivo(true);
 	}

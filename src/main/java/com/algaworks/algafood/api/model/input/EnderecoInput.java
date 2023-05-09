@@ -15,24 +15,24 @@ public class EnderecoInput {
 	@ApiModelProperty(example = "66123-000", required = true)
 	@NotBlank
 	private String cep;
-	
+
 	@ApiModelProperty(example = "Av. Ananin", required = true)
 	@NotBlank
 	private String logradouro;
-	
+
 	@ApiModelProperty(example = "2", required = true)
 	@NotBlank
 	private String numero;
-	
+
 	@ApiModelProperty(example = "prox. ao Mercado")
 	private String complemento;
-	
+
 	@ApiModelProperty(example = "Centro", required = true)
 	@NotBlank
 	private String bairro;
-	
+
 	@Valid
 	@NotNull
 	private CidadeIdInput cidade;
-		
+
 }

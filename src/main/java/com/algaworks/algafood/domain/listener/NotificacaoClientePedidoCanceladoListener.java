@@ -12,24 +12,24 @@ import com.algaworks.algafood.domain.service.EnvioEmailService.Mensagem;
 
 @Component
 public class NotificacaoClientePedidoCanceladoListener {
-	
+
   @Autowired
   private EnvioEmailService envioEmailService;
-	
+
 	//@EventListener
     @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
 	public void aoCancelarPedido(PedidoCanceladoEvent event) {
-		
+
 		 Pedido pedido = event.getPedido();
-		 
+
 		 var mensagem = Mensagem.builder()
 	    		   .assunto(pedido.getRestaurante().getNome()+ "- Pedido cancelado")
 	    		   .corpo("pedido-cancelado.html")
 	    		   .variavel("pedido", pedido)
 	    		   .destinatario(pedido.getCliente().getEmail())
 	    		   .build();
-	     
+
 	       envioEmailService.enviar(mensagem);
 	}
-	
+
 }

@@ -14,7 +14,7 @@ public class PageJsonSerializer extends JsonSerializer<Page<?>> {
 
 	@Override
 	public void serialize(Page<?> page, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-		
+
 		gen.writeStartObject();
 		gen.writeObjectField("content",page.getContent());
 		gen.writeNumberField("size",page.getSize());
@@ -22,7 +22,7 @@ public class PageJsonSerializer extends JsonSerializer<Page<?>> {
 		gen.writeNumberField("totalPages",page.getTotalPages());
 		gen.writeNumberField("number",page.getNumber());
 		gen.writeEndObject();
-		
+
 	}
-	
+
 }

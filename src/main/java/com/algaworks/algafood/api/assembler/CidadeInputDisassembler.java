@@ -13,11 +13,11 @@ public class CidadeInputDisassembler {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	public Cidade toDomainModel(CidadeInput cidadeInput) {
 		return modelMapper.map(cidadeInput, Cidade.class);
 	}
-	
+
 	public void copyToDomainObject(CidadeInput cidadeInput,Cidade cidade) {
 		 //evita a seguinte exception:
 	    //Caused by: org.hibernate.HibernateException: identifier of an instance of com.algaworks.algafood.domain.model.Cozinha was altered from 1 to 2

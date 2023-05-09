@@ -8,17 +8,17 @@ import lombok.Setter;
 @Setter
 public class FotoProdutoModel {
 	//FotoProduto DTO
-	
+
 	@ApiModelProperty(example = "FotoPizza")
 	private String nomeArquivo;
-	
+
 	@ApiModelProperty(example = "Descrição Foto da Pizza Caseira")
 	private String descricao;
-	
+
 	@ApiModelProperty(example = "image/jpeg")
 	private String contentType;
-	
+
 	@ApiModelProperty(example = "1024")
 	private Long tamanho;
-	
+
 }

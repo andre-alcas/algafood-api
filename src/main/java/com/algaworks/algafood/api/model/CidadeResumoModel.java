@@ -1,7 +1,5 @@
 package com.algaworks.algafood.api.model;
 
-import java.math.BigDecimal;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,13 +9,13 @@ import lombok.Setter;
 @Setter
 public class CidadeResumoModel {
 	//Cidade DTO
-	
+
 	@ApiModelProperty(example = "1")
 	private Long id;
-	
+
 	@ApiModelProperty(example = "Ananindeua")
 	private String nome;
-	
+
 	@ApiModelProperty(example = "Pará")
 	private String estado;
 

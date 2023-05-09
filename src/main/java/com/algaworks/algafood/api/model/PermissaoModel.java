@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class PermissaoModel {
 	//Permissao DTO
-	
+
 	@ApiModelProperty(example = "1")
 	private Long id;
 
@@ -17,6 +17,6 @@ public class PermissaoModel {
 
 	@ApiModelProperty(example = "Permite consultar cozinhas")
 	private String descricao;
-	
+
 
 }

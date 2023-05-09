@@ -17,28 +17,28 @@
 //
 //	@PersistenceContext
 //	private EntityManager manager;
-//	
+//
 //	@Override
 //	public List<Permissao> listarpermissoes(){
-//		
+//
 //		TypedQuery<Permissao> query = manager.createQuery("from Permissao",Permissao.class);
-//		
+//
 //		return query.getResultList();
-//		
+//
 //	}
-//	
+//
 //	@Override
 //	public Permissao consultarId(Long id) {
 //		return manager.find(Permissao.class, id);//select from where id == id
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public Permissao adicionar(Permissao permissao) {
-//		
+//
 //		return manager.merge(permissao);//retorna a instancia persistida
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public void remover(Permissao permissao) {

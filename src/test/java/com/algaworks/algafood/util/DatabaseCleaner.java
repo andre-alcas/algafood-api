@@ -30,7 +30,7 @@ public class DatabaseCleaner {
 	public void clearTables() {
 		try (Connection connection = dataSource.getConnection()) {
 			this.connection = connection;
-			
+
 			checkTestDatabase();
 			tryToClearTables();
 		} catch (SQLException e) {
@@ -39,7 +39,7 @@ public class DatabaseCleaner {
 			this.connection = null;
 		}
 	}
-	
+
 	private void checkTestDatabase() throws SQLException {
 		String catalog = connection.getCatalog();
 
@@ -100,5 +100,5 @@ public class DatabaseCleaner {
 		logger.debug("Adding SQL: {}", sql);
 		return sql;
 	}
-	
+
 }

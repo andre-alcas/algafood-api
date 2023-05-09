@@ -13,16 +13,16 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RestauranteBasicoModelOpenApi  {
-	
+
 	@ApiModelProperty(example="1")
 	private Long id;
-	
+
 	@ApiModelProperty(example="Comidas Regionais")
 	private String nome;
-	
+
 	@ApiModelProperty(example="10.00")
 	private BigDecimal taxaFrete;
-	
+
 	private CozinhaModel cozinha;
-	
+
 }

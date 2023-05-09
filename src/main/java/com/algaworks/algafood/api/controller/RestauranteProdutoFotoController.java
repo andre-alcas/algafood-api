@@ -51,9 +51,10 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 	@Autowired
 	private FotoStorageService fotoStorage;
 
+	@Override
 	@PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId, @PathVariable Long produtoId,
-			@Valid FotoProdutoInput fotoProdutoInput, 
+			@Valid FotoProdutoInput fotoProdutoInput,
 			@RequestPart(required=true) MultipartFile arquivo) throws IOException {
 
 		Produto produto = cadastroProdutoService.buscarOuFalhar(restauranteId, produtoId);
@@ -69,15 +70,15 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 		FotoProduto fotoSalva = catalogoFotoProdutoService.salvar(foto, arquivo.getInputStream());
 
 		return fotoProdutoModelAssembler.toModel(fotoSalva);
-//		var nomeArquivo = UUID.randomUUID().toString() 
+//		var nomeArquivo = UUID.randomUUID().toString()
 //				+ "_" + fotoProdutoInput.getArquivo().getOriginalFilename();
-//		
+//
 //		var arquivoFoto = Path.of("/Users/alcas/catalogo", nomeArquivo);
-//		
+//
 //		//System.out.println(fotoProdutoInput.getDescricao());
 //		//System.out.println(arquivoFoto);
 //		//System.out.println(fotoProdutoInput.getArquivo().getContentType());
-//		
+//
 //		try {
 //			fotoProdutoInput.getArquivo().transferTo(arquivoFoto);
 //		} catch (Exception e) {
@@ -86,6 +87,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 
 	}
 
+	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public FotoProdutoModel buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {
 
@@ -95,6 +97,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 
 	}
 
+	@Override
 	@GetMapping(produces = MediaType.ALL_VALUE) // (produces = MediaType.IMAGE_JPEG_VALUE)
 	public ResponseEntity<?> servir(@PathVariable Long restauranteId,
 			@PathVariable Long produtoId, @RequestHeader(name = "accept") String acceptHeader)
@@ -109,7 +112,7 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 			verificarCompatibilidademediaType(mediaTypeFoto, mediaTypesAceitas);
 
 			FotoRecuperada fotoRecuperada = fotoStorage.recuperar(fotoProduto.getNomeArquivo());
-			
+
 			if(fotoRecuperada.temUrl()) {
 				return ResponseEntity.status(HttpStatus.FOUND)
 						.header(HttpHeaders.LOCATION,fotoRecuperada.getUrl())
@@ -118,13 +121,14 @@ public class RestauranteProdutoFotoController implements RestauranteProdutoFotoC
 			else {
 				return ResponseEntity.ok().contentType(mediaTypeFoto).body(new InputStreamResource(fotoRecuperada.getInputStream()));
 			}
-			
-			
+
+
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
+	@Override
 	@DeleteMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletar(@PathVariable Long restauranteId, @PathVariable Long produtoId) {

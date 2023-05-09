@@ -18,7 +18,7 @@ public interface EstatisticasControllerOpenApi {
 
     @ApiOperation("Consulta estatísticas de vendas diárias")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "restauranteId", value = "ID do restaurante", 
+        @ApiImplicitParam(name = "restauranteId", value = "ID do restaurante",
                 example = "1", dataType = "int"),
         @ApiImplicitParam(name = "dataCriacaoInicio", value = "Data/hora inicial da criação do pedido",
             example = "2019-12-01T00:00:00Z", dataType = "date-time"),
@@ -27,7 +27,7 @@ public interface EstatisticasControllerOpenApi {
     })
     List<VendaDiaria> consultarVendasDiarias(
             VendaDiariaFilter filtro,
-            
+
             @ApiParam(value = "Deslocamento de horário a ser considerado na consulta em relação ao UTC",
                 defaultValue = "+00:00")
             String timeOffset);

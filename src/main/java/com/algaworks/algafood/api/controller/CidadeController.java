@@ -1,9 +1,7 @@
 package com.algaworks.algafood.api.controller;
 
-import java.net.URI;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.algaworks.algafood.api.ResourceUrlHelper;
 import com.algaworks.algafood.api.assembler.CidadeInputDisassembler;
@@ -33,24 +28,23 @@ import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
 import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
-import com.google.common.net.HttpHeaders;
 
 @RestController
 @RequestMapping(path="/cidades")
 public class CidadeController implements CidadeControllerOpenApi {
-	
+
 	@Autowired
 	private CidadeRepository cidadeRepository;
-	
+
 	@Autowired
 	private CadastroCidadeService cadastroCidade;
-	
+
 	@Autowired
 	private CidadeModelAssembler cidadeModelAssembler;
-	
+
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
-	
+
 	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<CidadeModel> listar(){
@@ -62,31 +56,31 @@ public class CidadeController implements CidadeControllerOpenApi {
 	public CidadeModel buscar(@PathVariable Long cidadeId) {
 		return cidadeModelAssembler.toModel(cadastroCidade.buscarOuFalhar(cidadeId));
 	}
-	
+
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public CidadeModel adicionar(@RequestBody @Valid CidadeInput cidadeInput) {
 		try {
 			Cidade cidade = cidadeInputDisassembler.toDomainModel(cidadeInput);
-			
+
 			cidade = cadastroCidade.salvar(cidade);
-			
+
 			CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
-			
+
 			ResourceUrlHelper.addUriInResponseHeader(cidadeModel.getId());
-			
+
 			return cidadeModel;
 		}catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(),e);
 		}
 	}
-	
+
 	@Override
 	@PutMapping(value = "/{cidadeId}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public CidadeModel atualizar(@PathVariable Long cidadeId,
 			@RequestBody @Valid CidadeInput cidadeInput) {//instancia de cidade com propriedades vinda do corpo da requisição
-		
+
 		try {
 			Cidade cidadeAtual =  cadastroCidade.buscarOuFalhar(cidadeId);
 			cidadeInputDisassembler.copyToDomainObject(cidadeInput, cidadeAtual);
@@ -95,9 +89,9 @@ public class CidadeController implements CidadeControllerOpenApi {
 		}catch (EstadoNaoEncontradoException e) {
 			throw new NegocioException(e.getMessage(),e);
 		}
-		
+
 	}
-	
+
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{cidadeId}")

@@ -17,28 +17,28 @@
 //
 //	@PersistenceContext
 //	private EntityManager manager;
-//	
+//
 //	@Override
 //	public List<FormaPagamento> listarformaspagamento(){
-//		
+//
 //		TypedQuery<FormaPagamento> query = manager.createQuery("from FormaPagamento",FormaPagamento.class);
-//		
+//
 //		return query.getResultList();
-//		
+//
 //	}
-//	
+//
 //	@Override
 //	public FormaPagamento consultarId(Long id) {
 //		return manager.find(FormaPagamento.class, id);//select from where id == id
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public FormaPagamento adicionar(FormaPagamento formapagamento) {
-//		
+//
 //		return manager.merge(formapagamento);//retorna a instancia persistida
 //	}
-//	
+//
 //	@Override
 //	@Transactional
 //	public void remover(FormaPagamento formapagamento) {

@@ -12,7 +12,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
+
 import com.algaworks.algafood.core.validation.Groups;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -22,16 +24,16 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Cidade {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
-	@Column(nullable = false) 
+	@Column(nullable = false)
 	private String nome;
-	
+
 	@Valid
 	@NotNull
 	@ConvertGroup(from = Default.class, to = Groups.EstadoId.class)

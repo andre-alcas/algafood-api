@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 //@Table (name="tab_cozinhas") //2a opção
 public class Permissao {
-	
+
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)

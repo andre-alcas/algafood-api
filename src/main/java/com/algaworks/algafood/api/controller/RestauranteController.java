@@ -6,8 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +22,6 @@ import com.algaworks.algafood.api.model.RestauranteModel;
 import com.algaworks.algafood.api.model.input.RestauranteInput;
 import com.algaworks.algafood.api.model.view.RestauranteView;
 import com.algaworks.algafood.api.openapi.controller.RestauranteControllerOpenApi;
-import com.algaworks.algafood.api.openapi.model.RestauranteBasicoModelOpenApi;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
@@ -36,8 +32,6 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 //@CrossOrigin(origins= {"http://localhost:8000"})
@@ -54,44 +48,46 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 
 //	@Autowired
 //	private SmartValidator validator;
-	
+
 	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
-	
+
 	@Autowired
 	private RestauranteInputDisassembler restauranteInputDisassembler;
-	
+
 //	@GetMapping
 //	public MappingJacksonValue listar(@RequestParam(required=false) String projecao) {
 //		List<Restaurante> restaurantes = restauranteRepository.findAll();
 //		List<RestauranteModel> restaurantesModel = restauranteModelAssembler.toCollectionModel(restaurantes);
-//		
+//
 //		MappingJacksonValue restaurantesWrapper = new MappingJacksonValue(restaurantesModel);
-//		
+//
 //		restaurantesWrapper.setSerializationView(RestauranteView.Resumo.class);
-//		
+//
 //		if("apenas-nome".equals(projecao)) {
 //			restaurantesWrapper.setSerializationView(RestauranteView.ApenasNome.class);
 //		}else if("completo".equals(projecao)){
 //			restaurantesWrapper.setSerializationView(null);
 //		}
-//		
+//
 //		return restaurantesWrapper;
 //	}
-	
-	
+
+
+	@Override
 	@JsonView(RestauranteView.Resumo.class)
 	@GetMapping
 	public List<RestauranteModel> listar() {
 		return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
 	}
-//	
+//
 //	@JsonView(RestauranteView.Resumo.class)
 //	@GetMapping(params= "projecao=resumo")
 //	public List<RestauranteModel> listarResumido() {
 //		return listar();
 //	}
-//	
+//
+	@Override
 	@ApiOperation(value = "Lista restaurantes", hidden = true)
 	@JsonView(RestauranteView.ApenasNome.class)
 	@GetMapping(params= "projecao=apenas-nome")
@@ -99,17 +95,19 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return listar();
 	}
 
+	@Override
 	@GetMapping(value = "/{restauranteId}")
 	public RestauranteModel buscar(@PathVariable Long restauranteId) {
-		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);		
+		Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		return restauranteModelAssembler.toModel(restaurante);
 		//return cadastroRestaurante.buscarOuFalhar(restauranteId);
 	}
 
+	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {// instancia de restaurante com propriedades vinda do corpo da requisição
-		
+
 		try {
 			Restaurante restaurante = restauranteInputDisassembler.toDomainModel(restauranteInput);
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
@@ -118,6 +116,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
+	@Override
 	@PutMapping(value = "/{restauranteId}")
 	public RestauranteModel atualizar(@PathVariable Long restauranteId, @RequestBody @Valid RestauranteInput restauranteInput) {
 
@@ -125,45 +124,50 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 			//Restaurante restaurante = restauranteInputDisassembler.toDomainModel(restauranteInput);
 			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
-//			BeanUtils.copyProperties(restaurante, restauranteAtual, 
+//			BeanUtils.copyProperties(restaurante, restauranteAtual,
 //					"id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 			//substitui o BeanUtils.copyProperties
 			restauranteInputDisassembler.copyToDomainObject(restauranteInput, restauranteAtual);
-			
+
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
-			
+
 		}catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 			throw new NegocioException(e.getMessage());
 		}
 	}
-	
+
 	//PUT /restaurantes/{id}/ativo para ativar
+	@Override
 	@PutMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.ativar(restauranteId);
 	}
 	//DELETE /restaurantes/{id}/ativo para inativar
+	@Override
 	@DeleteMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
 	}
-	
+
 	//PUT /restaurantes/{id}/fechamento
+			@Override
 			@PutMapping(value = "/{restauranteId}/abertura")
 			@ResponseStatus(HttpStatus.NO_CONTENT)
 			public void abertura(@PathVariable Long restauranteId) {
 				cadastroRestaurante.abrir(restauranteId);
 			}
-	
+
 	//PUT /restaurantes/{id}/fechamento
+		@Override
 		@PutMapping(value = "/{restauranteId}/fechamento")
 		@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void fechamento(@PathVariable Long restauranteId) {
 			cadastroRestaurante.fechar(restauranteId);
 		}
-		
+
+		@Override
 		@PutMapping(value = "/ativacoes")
 		@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void ativarMuitos(@RequestBody List<Long> restauranteIds) {
@@ -173,7 +177,8 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 				throw new NegocioException(e.getMessage(),e);
 			}
 		}
-		
+
+		@Override
 		@DeleteMapping(value = "/ativacoes")
 		@ResponseStatus(HttpStatus.NO_CONTENT)
 		public void inativarMuitos(@RequestBody List<Long> restauranteIds) {
@@ -204,9 +209,9 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 //
 //	private void validate(Restaurante restaurante, String objectName) {
 //		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
-//		
+//
 //		validator.validate(restaurante, bindingResult);
-//		
+//
 //		if(bindingResult.hasErrors()) {
 //			throw new ValidacaoException(bindingResult);
 //		}
@@ -215,20 +220,20 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 //	private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino,
 //			HttpServletRequest request) {
 //		ServletServerHttpRequest serverHttpRequest = new ServletServerHttpRequest(request);
-//		
+//
 //		try {
 //			ObjectMapper objectMapper = new ObjectMapper();
 //			objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
 //			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-//			
+//
 //			Restaurante restauranteOrigem = objectMapper.convertValue(dadosOrigem, Restaurante.class);
-//			
+//
 //			dadosOrigem.forEach((nomePropriedade, valorPropriedade) -> {
 //				Field field = ReflectionUtils.findField(Restaurante.class, nomePropriedade);
 //				field.setAccessible(true);
-//				
+//
 //				Object novoValor = ReflectionUtils.getField(field, restauranteOrigem);
-//				
+//
 //				ReflectionUtils.setField(field, restauranteDestino, novoValor);
 //			});
 //		} catch (IllegalArgumentException e) {
@@ -236,5 +241,5 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 //			throw new HttpMessageNotReadableException(e.getMessage(), rootCause, serverHttpRequest);
 //		}
 //	}
-	
+
 }

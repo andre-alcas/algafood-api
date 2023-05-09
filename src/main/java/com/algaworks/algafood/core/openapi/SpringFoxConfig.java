@@ -46,7 +46,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SpringFoxConfig implements WebMvcConfigurer  {
-	
+
 	@Bean
 	public Docket apiDocket() {
 		TypeResolver typeResolver = new TypeResolver();
@@ -102,7 +102,7 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 			                );
 				//.apis(RequestHandlerSelectors.any())//busca qualquer controlador (inclusive do spring boot)
 	}
-	
+
 	private List<Response> globalGetResponseMessages() {
 		  return Arrays.asList(
 		      new ResponseBuilder()
@@ -159,18 +159,18 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 		          .build()
 		  );
 		}
-	
+
 	@Bean  //Resolver offsetdatetime Exemplo na documentacao
 	public JacksonModuleRegistrar springFoxJacksonConfig() {
 		return objectMapper -> objectMapper.registerModule(new JavaTimeModule());
 	}
-	
+
 	private Consumer<RepresentationBuilder> getProblemaModelReference() {
 	    return r -> r.model(m -> m.name("Problema")
 	            .referenceModel(ref -> ref.key(k -> k.qualifiedModelName(
 	                    q -> q.name("Problema").namespace("com.algaworks.algafood.api.exceptionhandler")))));
 	}
-	
+
 	public ApiInfo apiInfo() {
 		return new ApiInfo("AlgaFood API", "API aberta para cliente e restaurantes", "1", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
 //				.title("AlgaFood API")

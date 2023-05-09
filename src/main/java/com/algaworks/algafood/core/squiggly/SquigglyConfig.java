@@ -13,21 +13,21 @@ import com.github.bohnman.squiggly.web.SquigglyRequestFilter;
 
 @Configuration
 public class SquigglyConfig {
-	
+
 	@Bean
 	public FilterRegistrationBean<SquigglyRequestFilter> squigglyRequestFilter(ObjectMapper objectMapper){
-		
+
 		Squiggly.init(objectMapper, new RequestSquigglyContextProvider("campos",null));
 		//Squiggly.init(objectMapper, new RequestSquigglyContextProvider());
-		
+
 		var urlPatterns = Arrays.asList("/pedidos/*","/restaurante/*");
-		
+
 		var filterRegistration = new FilterRegistrationBean<SquigglyRequestFilter>();
 		filterRegistration.setFilter(new SquigglyRequestFilter());
 		filterRegistration.setOrder(1);
-		
+
 		filterRegistration.setUrlPatterns(urlPatterns);
-		
+
 		return filterRegistration;
 	}
 

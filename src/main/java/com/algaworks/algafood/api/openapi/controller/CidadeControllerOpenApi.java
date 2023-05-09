@@ -36,7 +36,7 @@ public interface CidadeControllerOpenApi {
 		@ApiResponse(code=200,message="Cidade atualizada"),
 		@ApiResponse(code=404,message="Cidade não encontrada",response = Problem.class),
 	})
-	CidadeModel atualizar(@ApiParam(value="ID de uma cidade", example="1") Long cidadeId, 
+	CidadeModel atualizar(@ApiParam(value="ID de uma cidade", example="1") Long cidadeId,
 			@ApiParam(name="corpo",value="Representação de uma nova cidade",required=true) CidadeInput cidadeInput);
 
 	@ApiOperation("Exclui uma cidade por ID")

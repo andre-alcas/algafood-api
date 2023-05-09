@@ -7,10 +7,10 @@ import lombok.Setter;
 @Setter
 public class GrupoModel {
 	//Grupo DTO
-	
+
 	private Long id;
-	
+
 	private String nome;
-	
+
 
 }

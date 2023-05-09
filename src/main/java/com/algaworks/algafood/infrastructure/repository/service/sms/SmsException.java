@@ -2,7 +2,7 @@ package com.algaworks.algafood.infrastructure.repository.service.sms;
 
 public class SmsException extends RuntimeException {
 
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public SmsException(String message, Throwable cause) {

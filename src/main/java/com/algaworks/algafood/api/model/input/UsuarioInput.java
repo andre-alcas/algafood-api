@@ -18,6 +18,6 @@ public class UsuarioInput {
 	@ApiModelProperty(example = "contato@email.com.br", required = true)
 	@NotBlank
 	@Email
-	private String email;   
-		
+	private String email;
+
 }

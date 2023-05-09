@@ -21,7 +21,7 @@ import javax.validation.constraints.PositiveOrZero;
 @Constraint(validatedBy = { })
 @PositiveOrZero
 public @interface TaxaFrete {
-	
+
 	//o valor de mensagem dessa constraint vai substituir da positiveorzero que era padrao
 	@OverridesAttribute(constraint= PositiveOrZero.class, name="message")
 	String message() default "{TaxaFrete.invalida}";

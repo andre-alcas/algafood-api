@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiResponses;
 public interface EstadoControllerOpenApi {
 
 final static String className = " estado ";
-	
+
 	@ApiOperation(value="Lista os"+className+"s")
 	List<EstadoModel> listar();
 
@@ -40,7 +40,7 @@ final static String className = " estado ";
 	})
 	EstadoModel atualizar(
 			@ApiParam(value="ID de um"+className, example="1")
-			Long estadoId, 
+			Long estadoId,
 			@ApiParam(name="corpo",value="Representação de um novo"+className,required=true)
 			EstadoInput estadoInput);
 

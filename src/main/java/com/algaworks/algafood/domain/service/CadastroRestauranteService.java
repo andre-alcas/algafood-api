@@ -17,25 +17,25 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @Service
 public class CadastroRestauranteService {
-	
+
 	private static final String MSG_RESTAURANTE_NAO_ENCONTRADO = "Não existe um cadastro de restaurante com código %d";
 	private static final String MSG_RESTAURANTE_EM_USO = "Restaurante de código %d não pode ser removida, pois está em uso";
-	
+
 	@Autowired
 	private RestauranteRepository restauranteRepository;
-	
+
 	@Autowired
 	private CadastroCozinhaService cadastroCozinha;
-	
+
 	@Autowired
 	private CadastroCidadeService cadastroCidade;
-	
+
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
-	
+
 	@Autowired
 	private CadastroUsuarioService cadastroUsuario;
-	
+
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
@@ -47,88 +47,88 @@ public class CadastroRestauranteService {
 
 		restaurante.setCozinha(cozinha);
 		restaurante.getEndereco().setCidade(cidade);
-	
-		return restauranteRepository.save(restaurante); 
+
+		return restauranteRepository.save(restaurante);
 	}
-	
+
 	@Transactional
 	public void ativar(Long restauranteId) {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-		
+
 		//restauranteAtual.setAtivo(true);
 		restauranteAtual.ativar();
 		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
 	}
-	
+
 	@Transactional
 	public void inativar(Long restauranteId) {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-		
+
 		//restauranteAtual.setAtivo(true);
 		restauranteAtual.inativar();
 		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
 	}
-	
+
 	@Transactional
 	public void ativar(List<Long> restauranteIds) {
 		restauranteIds.forEach(this::ativar);
 	}
-	
+
 	@Transactional
 	public void inativar(List<Long> restauranteIds) {
 		restauranteIds.forEach(this::inativar);
 	}
-	
+
 	@Transactional
 	public void abrir(Long restauranteId) {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-		
+
 		//restauranteAtual.setAtivo(true);
 		restauranteAtual.abrir();
 		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
 	}
-	
+
 	@Transactional
 	public void fechar(Long restauranteId) {
 		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-		
+
 		//restauranteAtual.setAtivo(true);
 		restauranteAtual.fechar();
 		//não precisa fazer o save porque o JPA ainda está gerenciando essa instancia e vai atualizar logo depois de qualquer modificação aqui feita
 	}
-	
+
 	@Transactional
 	public void desassociarFormaPagamento(Long restauranteId,Long formaPagamentoId) {
 		Restaurante restaurante = buscarOuFalhar(restauranteId);
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
-		
+
 		restaurante.getFormasPagamento().remove(formaPagamento);
 	}
-	
+
 	@Transactional
 	public void associarFormaPagamento(Long restauranteId,Long formaPagamentoId) {
 		Restaurante restaurante = buscarOuFalhar(restauranteId);
 		FormaPagamento formaPagamento = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
-		
+
 		restaurante.getFormasPagamento().add(formaPagamento);
 	}
-	
+
 	@Transactional
 	public void desassociarUsuario(Long restauranteId,Long usuarioId) {
 		Restaurante restaurante = buscarOuFalhar(restauranteId);
 		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
-		
+
 		restaurante.getUsuarios().remove(usuario);
 	}
-	
+
 	@Transactional
 	public void associarUsuario(Long restauranteId,Long usuarioId) {
 		Restaurante restaurante = buscarOuFalhar(restauranteId);
 		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
-		
+
 		restaurante.getUsuarios().add(usuario);
 	}
-	
+
 //	public void excluir(Long restauranteId) {
 //		try {
 //			restauranteRepository.deleteById(restauranteId);
