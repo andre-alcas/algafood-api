@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -49,8 +50,41 @@ public class CidadeController implements CidadeControllerOpenApi {
 
 	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<CidadeModel> listar(){
-		return cidadeModelAssembler.toCollectionModel(cidadeRepository.findAll());
+	public CollectionModel<CidadeModel> listar(){
+		
+		List<Cidade> todasCidades = cidadeRepository.findAll();
+		
+		List<CidadeModel> cidadesModel = cidadeModelAssembler.toCollectionModel(todasCidades);
+		
+		 CollectionModel<CidadeModel> cidadesCollectionModel = CollectionModel.of(cidadesModel);
+		
+		 cidadesModel.forEach(cidadeModel -> {
+			 cidadeModel.add(
+						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
+								.buscar(cidadeModel.getId())
+								)
+						.withSelfRel()
+						);
+				cidadeModel.add(
+						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
+								.listar()
+								)
+						.withSelfRel()
+						);
+				cidadeModel.add(
+						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstadoController.class)
+								.buscar(cidadeModel.getEstado().getId())
+								)
+						.withSelfRel()
+						);
+		 });//FIM FOREACH
+		 
+		 cidadesCollectionModel.add(
+					WebMvcLinkBuilder.linkTo(CidadeController.class)
+					.withSelfRel()
+					);
+		 
+		return cidadesCollectionModel;
 	}
 
 	@Override
@@ -62,24 +96,44 @@ public class CidadeController implements CidadeControllerOpenApi {
 		CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
 		
 		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(CidadeController.class)
-				.slash(cidadeModel.getId()).withSelfRel()
+				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
+						.buscar(cidadeModel.getId())
+						)
+				.withSelfRel()
 				);
+		
+//		cidadeModel.add(
+//				WebMvcLinkBuilder.linkTo(CidadeController.class)
+//				.slash(cidadeModel.getId()).withSelfRel()
+//				);
 
 		//cidadeModel.add(Link.of("http://localhost:8080/cidades/1"));
 //		cidadeModel.add(Link.of("http://localhost:8080/cidades/1", IanaLinkRelations.SELF));
 
 //		cidadeModel.add(Link.of("http://localhost:8080/cidades", IanaLinkRelations.COLLECTION));
 		//cidadeModel.add(Link.of("http://localhost:8080/cidades", "cidades"));
+//		cidadeModel.add(
+//				WebMvcLinkBuilder.linkTo(CidadeController.class)
+//				.withSelfRel()
+//				);
+		
 		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(CidadeController.class)
+				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
+						.listar()
+						)
 				.withSelfRel()
 				);
 
 		//cidadeModel.getEstado().add(Link.of("http://localhost:8080/estados/1"));
+//		cidadeModel.add(
+//				WebMvcLinkBuilder.linkTo(EstadoController.class)
+//				.slash(cidadeModel.getEstado().getId()).withSelfRel()
+//				);
 		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(EstadoController.class)
-				.slash(cidadeModel.getEstado().getId()).withSelfRel()
+				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstadoController.class)
+						.buscar(cidadeModel.getEstado().getId())
+						)
+				.withSelfRel()
 				);
 
 		
