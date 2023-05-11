@@ -28,6 +28,7 @@ import com.algaworks.algafood.api.model.PedidoModel;
 import com.algaworks.algafood.api.model.PedidoResumoModel;
 import com.algaworks.algafood.api.model.input.PedidoInput;
 import com.algaworks.algafood.api.openapi.controller.PedidoControllerOpenApi;
+import com.algaworks.algafood.core.data.PageWrapper;
 import com.algaworks.algafood.core.data.PageableTranslator;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
@@ -64,7 +65,7 @@ public class PedidoController implements PedidoControllerOpenApi {
 	@GetMapping
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,@PageableDefault(size=10) Pageable pageable) {
 
-    	pageable = traduzirPageable(pageable);
+    	Pageable pageableTraduzido = traduzirPageable(pageable);
 
     	//Page<Pedido> todosPedidos = pedidoRepository.findAll(PedidoSpecs.usandoFiltro(filtro),pageable);
 
@@ -74,7 +75,9 @@ public class PedidoController implements PedidoControllerOpenApi {
     	//Page<PedidoResumoModel> pedidosModelPage = new PageImpl<>(pedidosModel, pageable, todosPedidos.getTotalElements());
 
     	Page<Pedido> pedidosPage = pedidoRepository.findAll(
-				PedidoSpecs.usandoFiltro(filtro), pageable);
+				PedidoSpecs.usandoFiltro(filtro), pageableTraduzido);
+    	
+		pedidosPage = new PageWrapper<>(pedidosPage, pageable);
 		
 		return pagedResourcesAssembler.toModel(pedidosPage, pedidoResumoModelAssembler);
     }
@@ -139,7 +142,7 @@ public class PedidoController implements PedidoControllerOpenApi {
     	var mapeamento = Map.of(
     			"codigo","codigo",
     			"nomeCliente","cliente.nome",
-    			"restaurante.nome","restaurante.nome",
+    			"nomeRestaurante","restaurante.nome",
     			"valorTotal","valorTotal"
     			);
 
