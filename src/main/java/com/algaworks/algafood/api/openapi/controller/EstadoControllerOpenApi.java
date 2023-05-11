@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.EstadoModel;
 import com.algaworks.algafood.api.model.input.EstadoInput;
@@ -18,7 +20,7 @@ public interface EstadoControllerOpenApi {
 final static String className = " estado ";
 
 	@ApiOperation(value="Lista os"+className+"s")
-	List<EstadoModel> listar();
+	CollectionModel<EstadoModel> listar();
 
 	@ApiOperation("Busca um"+className+"por ID")
 	@ApiResponses({

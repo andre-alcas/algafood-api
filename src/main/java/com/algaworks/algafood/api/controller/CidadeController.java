@@ -54,37 +54,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		
 		List<Cidade> todasCidades = cidadeRepository.findAll();
 		
-		List<CidadeModel> cidadesModel = cidadeModelAssembler.toCollectionModel(todasCidades);
-		
-		 CollectionModel<CidadeModel> cidadesCollectionModel = CollectionModel.of(cidadesModel);
-		
-		 cidadesModel.forEach(cidadeModel -> {
-			 cidadeModel.add(
-						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
-								.buscar(cidadeModel.getId())
-								)
-						.withSelfRel()
-						);
-				cidadeModel.add(
-						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
-								.listar()
-								)
-						.withSelfRel()
-						);
-				cidadeModel.add(
-						WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstadoController.class)
-								.buscar(cidadeModel.getEstado().getId())
-								)
-						.withSelfRel()
-						);
-		 });//FIM FOREACH
-		 
-		 cidadesCollectionModel.add(
-					WebMvcLinkBuilder.linkTo(CidadeController.class)
-					.withSelfRel()
-					);
-		 
-		return cidadesCollectionModel;
+		return cidadeModelAssembler.toCollectionModel(todasCidades);
 	}
 
 	@Override
@@ -93,51 +63,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		
 		Cidade cidade = cadastroCidade.buscarOuFalhar(cidadeId);
 		
-		CidadeModel cidadeModel = cidadeModelAssembler.toModel(cidade);
-		
-		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
-						.buscar(cidadeModel.getId())
-						)
-				.withSelfRel()
-				);
-		
-//		cidadeModel.add(
-//				WebMvcLinkBuilder.linkTo(CidadeController.class)
-//				.slash(cidadeModel.getId()).withSelfRel()
-//				);
-
-		//cidadeModel.add(Link.of("http://localhost:8080/cidades/1"));
-//		cidadeModel.add(Link.of("http://localhost:8080/cidades/1", IanaLinkRelations.SELF));
-
-//		cidadeModel.add(Link.of("http://localhost:8080/cidades", IanaLinkRelations.COLLECTION));
-		//cidadeModel.add(Link.of("http://localhost:8080/cidades", "cidades"));
-//		cidadeModel.add(
-//				WebMvcLinkBuilder.linkTo(CidadeController.class)
-//				.withSelfRel()
-//				);
-		
-		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CidadeController.class)
-						.listar()
-						)
-				.withSelfRel()
-				);
-
-		//cidadeModel.getEstado().add(Link.of("http://localhost:8080/estados/1"));
-//		cidadeModel.add(
-//				WebMvcLinkBuilder.linkTo(EstadoController.class)
-//				.slash(cidadeModel.getEstado().getId()).withSelfRel()
-//				);
-		cidadeModel.add(
-				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EstadoController.class)
-						.buscar(cidadeModel.getEstado().getId())
-						)
-				.withSelfRel()
-				);
-
-		
-		return cidadeModel;
+		return cidadeModelAssembler.toModel(cidade);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.UsuarioModel;
 
@@ -18,7 +20,7 @@ public interface RestauranteUsuarioControllerOpenApi {
 	final static String classSuportName = " restaurante ";
 
 	@ApiOperation(value="Lista os"+className)
-	List<UsuarioModel> listar(Long restauranteId) ;
+	CollectionModel<UsuarioModel> listar(@ApiParam(value = "ID do"+classSuportName, example = "1", required = true) Long restauranteId) ;
 
 
 	@ApiOperation("Dessassocia um"+className+"por ID")
