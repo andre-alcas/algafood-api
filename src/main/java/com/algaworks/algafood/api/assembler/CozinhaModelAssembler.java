@@ -6,6 +6,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.CozinhaController;
 import com.algaworks.algafood.api.model.CozinhaModel;
 import com.algaworks.algafood.domain.model.Cozinha;
@@ -15,6 +16,9 @@ public class CozinhaModelAssembler extends RepresentationModelAssemblerSupport<C
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private AlgaLinks algaLinks;
 
 	public CozinhaModelAssembler() {
 		super(CozinhaController.class,CozinhaModel.class);
@@ -27,8 +31,7 @@ public class CozinhaModelAssembler extends RepresentationModelAssemblerSupport<C
 
 		modelMapper.map(cozinha, cozinhaModel);// ja faz a relação withSelfRel
 		
-		cozinhaModel.add(WebMvcLinkBuilder.linkTo(CozinhaController.class)
-				.withSelfRel());
+		 cozinhaModel.add(algaLinks.linkToCozinhas("cozinhas"));
 		
 		return cozinhaModel;
 	}

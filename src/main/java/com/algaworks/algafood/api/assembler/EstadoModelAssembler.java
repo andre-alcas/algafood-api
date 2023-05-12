@@ -10,6 +10,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.controller.UsuarioController;
 import com.algaworks.algafood.api.model.EstadoModel;
@@ -22,7 +23,9 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
 
 	@Autowired
 	private ModelMapper modelMapper;
-
+	
+	@Autowired
+	private AlgaLinks algaLinks;
 
 	public EstadoModelAssembler() {
 		super(EstadoController.class, EstadoModel.class);
@@ -33,8 +36,7 @@ public class EstadoModelAssembler extends RepresentationModelAssemblerSupport<Es
 		
 		EstadoModel estadoModel = createModelWithId(estado.getId(), estado);
 
-		modelMapper.map(estado, estadoModel);// ja faz a relação withSelfRel
-		
+		estadoModel.add(algaLinks.linkToEstados("estados"));
 		
 		return estadoModel;
 	}

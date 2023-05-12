@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
+import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.controller.UsuarioController;
 import com.algaworks.algafood.api.controller.UsuarioGrupoController;
 import com.algaworks.algafood.api.model.UsuarioModel;
@@ -21,6 +22,9 @@ public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<U
 
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private AlgaLinks algaLinks;
 
 	@Override
 	public UsuarioModel toModel(Usuario usuario) {
@@ -29,9 +33,9 @@ public class UsuarioModelAssembler extends RepresentationModelAssemblerSupport<U
 
 		modelMapper.map(usuario, usuarioModel);// ja faz a relação withSelfRel
 
-		usuarioModel.add(WebMvcLinkBuilder
-				.linkTo(WebMvcLinkBuilder.methodOn(UsuarioGrupoController.class).listar(usuario.getId()))
-				.withRel("grupos-usuario"));
+		usuarioModel.add(algaLinks.linkToUsuarios("usuarios"));
+	    
+	    usuarioModel.add(algaLinks.linkToGruposUsuario(usuario.getId(), "grupos-usuario"));
 
 		return usuarioModel;
 	}

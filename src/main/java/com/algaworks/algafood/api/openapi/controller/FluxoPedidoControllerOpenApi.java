@@ -1,5 +1,7 @@
 package com.algaworks.algafood.api.openapi.controller;
 
+import org.springframework.http.ResponseEntity;
+
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 
 import io.swagger.annotations.Api;
@@ -17,14 +19,14 @@ public interface FluxoPedidoControllerOpenApi {
 		@ApiResponse(code=204,message=className+"cancelado"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-	void cancelar(String codigoPedido);
+	ResponseEntity<Void> cancelar(String codigoPedido);
 
 	@ApiOperation("Confirmação de pedido")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"confirmado"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-	void confirmar(String codigoPedido);
+	ResponseEntity<Void> confirmar(String codigoPedido);
 
 
 	@ApiOperation("Confirmação de pedido via SMS")
@@ -32,13 +34,13 @@ public interface FluxoPedidoControllerOpenApi {
 		@ApiResponse(code=204,message=className+"confirmado por SMS"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-    void confirmarSMS(String codigoPedido);
+    ResponseEntity<Void> confirmarSMS(String codigoPedido);
 
 	@ApiOperation("Registrar entrega de pedido")
 	@ApiResponses({
 		@ApiResponse(code=204,message=className+"entregue"),
 		@ApiResponse(code=404,message=className+"não encontrado",response = Problem.class),
 	})
-	void entregar(String codigoPedido);
+	ResponseEntity<Void> entregar(String codigoPedido);
 
 }
