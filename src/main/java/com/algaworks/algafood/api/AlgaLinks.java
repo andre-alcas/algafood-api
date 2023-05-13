@@ -31,6 +31,26 @@ public class AlgaLinks {
     		new TemplateVariable("sort", VariableType.REQUEST_PARAM)
     		);
 	
+	public Link linkToRestauranteAbertura(Long restauranteId, String rel) {
+	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteController.class)
+	            .abertura(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteFechamento(Long restauranteId, String rel) {
+	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteController.class)
+	            .fechamento(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteInativacao(Long restauranteId, String rel) {
+	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteController.class)
+	            .inativar(restauranteId)).withRel(rel);
+	}
+
+	public Link linkToRestauranteAtivacao(Long restauranteId, String rel) {
+	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteController.class)
+	            .ativar(restauranteId)).withRel(rel);
+	}
+	
 	public Link linkToRestaurantes(String rel) {
 	    return WebMvcLinkBuilder.linkTo(RestauranteController.class).withRel(rel);
 	}
