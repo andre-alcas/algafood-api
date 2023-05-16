@@ -2,6 +2,7 @@ package com.algaworks.algafood.api.openapi.controller;
 
 import java.util.List;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.ServletWebRequest;
 
@@ -21,7 +22,8 @@ public interface FormasPagamentoControllerOpenApi {
 	final static String className = " forma de pagamento ";
 
 	@ApiOperation(value="Lista as"+className+"s")
-	ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request);
+	//ResponseEntity<List<FormaPagamentoModel>> listar(ServletWebRequest request);
+	ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request);
 
 	@ApiOperation("Busca uma"+className+"por ID")
 	@ApiResponses({
