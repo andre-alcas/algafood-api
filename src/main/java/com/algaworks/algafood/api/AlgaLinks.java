@@ -14,6 +14,8 @@ import com.algaworks.algafood.api.controller.CozinhaController;
 import com.algaworks.algafood.api.controller.EstadoController;
 import com.algaworks.algafood.api.controller.FluxoPedidoController;
 import com.algaworks.algafood.api.controller.FormaPagamentoController;
+import com.algaworks.algafood.api.controller.GrupoController;
+import com.algaworks.algafood.api.controller.GrupoPermissaoController;
 import com.algaworks.algafood.api.controller.PedidoController;
 import com.algaworks.algafood.api.controller.RestauranteController;
 import com.algaworks.algafood.api.controller.RestauranteFormaPagamentoController;
@@ -35,6 +37,19 @@ public class AlgaLinks {
 	public static final TemplateVariables PROJECAO_VARIABLES = new TemplateVariables(
     		new TemplateVariable("projecao", VariableType.REQUEST_PARAM)
     		);
+	
+	public Link linkToGrupos(String rel) {
+	    return WebMvcLinkBuilder.linkTo(GrupoController.class).withRel(rel);
+	}
+
+	public Link linkToGrupos() {
+	    return linkToGrupos(IanaLinkRelations.SELF.value());
+	}
+
+	public Link linkToGrupoPermissoes(Long grupoId, String rel) {
+	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(GrupoPermissaoController.class)
+	            .listar(grupoId)).withRel(rel);
+	} 
 	
 	public Link linkToFotoProduto(Long restauranteId, Long produtoId, String rel) {
 	    return WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(RestauranteProdutoFotoController.class)
