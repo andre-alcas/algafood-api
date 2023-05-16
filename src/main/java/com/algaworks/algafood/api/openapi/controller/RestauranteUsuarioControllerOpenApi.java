@@ -3,6 +3,7 @@ package com.algaworks.algafood.api.openapi.controller;
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.http.ResponseEntity;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
 import com.algaworks.algafood.api.model.UsuarioModel;
@@ -28,7 +29,7 @@ public interface RestauranteUsuarioControllerOpenApi {
 		@ApiResponse(code=204,message=className+"dessassociado com sucesso"),
 		@ApiResponse(code=404,message=classSuportName+"ou"+className+"não encontrado",response = Problem.class),
 	})
-	public void desassociar(@ApiParam(value="ID de um"+classSuportName, example="1") Long restauranteId, @ApiParam(value="ID de um"+className, example="1") Long usuarioId );
+	public ResponseEntity<Void> desassociar(@ApiParam(value="ID de um"+classSuportName, example="1") Long restauranteId, @ApiParam(value="ID de um"+className, example="1") Long usuarioId );
 
 
 	@ApiOperation("Associa uma"+className+"por ID")
@@ -36,7 +37,7 @@ public interface RestauranteUsuarioControllerOpenApi {
 		@ApiResponse(code=204,message=className+"associado com sucesso"),
 		@ApiResponse(code=404,message=classSuportName+"ou"+className+"não encontrado",response = Problem.class),
 	})
-	public void associar(@ApiParam(value="ID de um"+classSuportName, example="1") Long restauranteId, @ApiParam(value="ID de um"+className, example="1") Long usuarioId );
+	public ResponseEntity<Void> associar(@ApiParam(value="ID de um"+classSuportName, example="1") Long restauranteId, @ApiParam(value="ID de um"+className, example="1") Long usuarioId );
 
 
 }
