@@ -23,7 +23,7 @@ public class CozinhasModelOpenApi {
 	@ApiModel("CozinhasEmbeddedModel")
 	@Data
 	public class CozinhasEmbeddedModelOpenApi{
-		private List<CozinhaModel> cidades;
+		private List<CozinhaModel> cozinhas;
 	}
 
 }
