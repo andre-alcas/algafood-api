@@ -8,21 +8,20 @@ import com.algaworks.algafood.api.model.EstadoModel;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @ApiModel("EstadosModel")
-@Getter
-@Setter
+@Data
 public class EstadosModelOpenApi {
-	
+
 	private EstadosEmbeddedModelOpenApi _embedded;
 	private Links _links;
 	
 	@ApiModel("EstadosEmbeddedModel")
 	@Data
-	public class EstadosEmbeddedModelOpenApi{
+	public class EstadosEmbeddedModelOpenApi {
+		
 		private List<EstadoModel> estados;
+		
 	}
-
+	
 }

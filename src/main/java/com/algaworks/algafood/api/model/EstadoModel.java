@@ -7,17 +7,15 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-@Relation(collectionRelation = "estados")//muda nome da colletion list pra estados
-@Getter
+@Relation(collectionRelation = "estados")
 @Setter
-public class EstadoModel extends RepresentationModel<EstadoModel>{
-	//Estado DTO
+@Getter
+public class EstadoModel extends RepresentationModel<EstadoModel> {
 
-	@ApiModelProperty(example="1",required=true)
+	@ApiModelProperty(example = "1")
 	private Long id;
-
-	@ApiModelProperty(example="Pará")
+	
+	@ApiModelProperty(example = "Minas Gerais")
 	private String nome;
-
-
+	
 }

@@ -17,7 +17,7 @@ public enum ProblemType {
 	private String uri;
 
 	private ProblemType(String path, String title){
-		this.uri = "https:/algafood.com.br" + path;
+		this.uri = "https://localhost:8080" + path;
 		this.title = title;
 	}
 

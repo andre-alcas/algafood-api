@@ -45,13 +45,15 @@ public class EstadoController implements EstadoControllerOpenApi {
 	@Override
 	@GetMapping
 	public CollectionModel<EstadoModel> listar() {
-		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
+		List<Estado> todosEstados = estadoRepository.findAll();
+		return estadoModelAssembler.toCollectionModel(todosEstados);
 	}
 
 	@Override
 	@GetMapping(value = "/{estadoId}")
 	public EstadoModel buscar(@PathVariable Long estadoId) {
-		return estadoModelAssembler.toModel(cadastroEstado.buscarOuFalhar(estadoId));
+		Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
+		return estadoModelAssembler.toModel(estado);
 	}
 
 	@Override
