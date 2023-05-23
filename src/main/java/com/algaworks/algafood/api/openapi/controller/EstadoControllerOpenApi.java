@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.hateoas.CollectionModel;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
-import com.algaworks.algafood.api.model.EstadoModel;
 import com.algaworks.algafood.api.model.input.EstadoInput;
+import com.algaworks.algafood.api.v1.model.EstadoModel;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

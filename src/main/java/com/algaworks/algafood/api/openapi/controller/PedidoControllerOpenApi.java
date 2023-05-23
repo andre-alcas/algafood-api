@@ -4,9 +4,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.PagedModel;
 
 import com.algaworks.algafood.api.exceptionhandler.Problem;
-import com.algaworks.algafood.api.model.PedidoModel;
-import com.algaworks.algafood.api.model.PedidoResumoModel;
 import com.algaworks.algafood.api.model.input.PedidoInput;
+import com.algaworks.algafood.api.v1.model.PedidoModel;
+import com.algaworks.algafood.api.v1.model.PedidoResumoModel;
 import com.algaworks.algafood.domain.filter.PedidoFilter;
 
 import io.swagger.annotations.Api;
