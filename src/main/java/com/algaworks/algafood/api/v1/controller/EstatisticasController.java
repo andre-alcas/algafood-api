@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.AlgaLinks;
 import com.algaworks.algafood.api.model.dto.VendaDiaria;
-import com.algaworks.algafood.api.openapi.controller.EstatisticasControllerOpenApi;
+import com.algaworks.algafood.api.v1.openapi.controller.EstatisticasControllerOpenApi;
 import com.algaworks.algafood.domain.filter.VendaDiariaFilter;
 import com.algaworks.algafood.domain.service.VendaQueryService;
 import com.algaworks.algafood.domain.service.VendaReportService;

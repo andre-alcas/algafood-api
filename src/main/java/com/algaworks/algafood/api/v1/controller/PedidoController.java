@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.api.model.input.PedidoInput;
-import com.algaworks.algafood.api.openapi.controller.PedidoControllerOpenApi;
 import com.algaworks.algafood.api.v1.assembler.PedidoInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.PedidoModelAssembler;
 import com.algaworks.algafood.api.v1.assembler.PedidoResumoModelAssembler;
 import com.algaworks.algafood.api.v1.model.PedidoModel;
 import com.algaworks.algafood.api.v1.model.PedidoResumoModel;
+import com.algaworks.algafood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.algaworks.algafood.core.data.PageWrapper;
 import com.algaworks.algafood.core.data.PageableTranslator;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
