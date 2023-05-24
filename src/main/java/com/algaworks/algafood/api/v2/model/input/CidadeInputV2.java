@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.v2.model.input;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -15,9 +14,10 @@ public class CidadeInputV2 {
 
 	    @ApiModelProperty(example="Ananindeua",required=true)
 		@NotBlank
-		private String nome;
+		private String nomeCidade;
+	    
+	    @ApiModelProperty(example="1",required=true)
+		@NotNull
+		private Long idEstado;
 
-//		@Valid
-//		@NotNull
-//		private EstadoIdInput estado;
 }

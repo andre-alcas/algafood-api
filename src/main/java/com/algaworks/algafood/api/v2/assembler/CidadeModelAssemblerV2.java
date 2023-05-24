@@ -28,15 +28,13 @@ public class CidadeModelAssemblerV2 extends RepresentationModelAssemblerSupport<
 	
 	@Override
 	public CidadeModelV2 toModel(Cidade cidade) {
-	    CidadeModelV2 CidadeModelV2 = createModelWithId(cidade.getId(), cidade);
+	    CidadeModelV2 cidadeModel = createModelWithId(cidade.getId(), cidade);
 	    
-	    modelMapper.map(cidade, CidadeModelV2);
+	    modelMapper.map(cidade, cidadeModel);
 	    
-	    CidadeModelV2.add(algaLinks.linkToCidades("cidades"));
-	    
-	    //CidadeModelV2.getEstado().add(algaLinks.linkToEstado(CidadeModelV2.getEstado().getId()));
-	    
-	    return CidadeModelV2;
+	   cidadeModel.add(algaLinks.linkToCidades("cidades"));
+	    	    
+	    return cidadeModel;
 	}
 	
 	@Override
