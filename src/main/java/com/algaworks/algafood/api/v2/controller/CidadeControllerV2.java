@@ -97,10 +97,10 @@ public class CidadeControllerV2 {
 
 	}
 
-	
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping(value = "/{cidadeId}")
-	public void remover(@PathVariable Long cidadeId) {//instancia de cidade com propriedades vinda do corpo da requisição
-		cadastroCidade.excluir(cidadeId);
-	}
+//  Não pode ser mapeado na mesma URL em um MediaType diferente, já que não aceita entrada e retorna void.
+//	@DeleteMapping(value = "/{cidadeId}", produces = {})
+//	@ResponseStatus(HttpStatus.NO_CONTENT)
+//	public void remover(@PathVariable Long cidadeId) {
+//		cadastroCidade.excluir(cidadeId);	
+//	}
 }
