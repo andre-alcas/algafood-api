@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.api.model.input.EstadoInput;
 import com.algaworks.algafood.api.v1.assembler.EstadoInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.EstadoModelAssembler;
 import com.algaworks.algafood.api.v1.model.EstadoModel;
+import com.algaworks.algafood.api.v1.model.input.EstadoInput;
 import com.algaworks.algafood.api.v1.openapi.controller.EstadoControllerOpenApi;
 import com.algaworks.algafood.domain.model.Estado;
 import com.algaworks.algafood.domain.repository.EstadoRepository;

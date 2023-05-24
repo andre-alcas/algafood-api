@@ -3,7 +3,7 @@ package com.algaworks.algafood.api.v1.model;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 
-import com.algaworks.algafood.api.model.view.RestauranteView;
+import com.algaworks.algafood.api.v1.model.view.RestauranteView;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import io.swagger.annotations.ApiModelProperty;

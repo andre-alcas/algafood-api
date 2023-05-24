@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.algaworks.algafood.api.model.input.CozinhaInput;
 import com.algaworks.algafood.api.v1.assembler.CozinhaInputDisassembler;
 import com.algaworks.algafood.api.v1.assembler.CozinhaModelAssembler;
 import com.algaworks.algafood.api.v1.model.CozinhaModel;
+import com.algaworks.algafood.api.v1.model.input.CozinhaInput;
 import com.algaworks.algafood.api.v1.openapi.controller.CozinhaControllerOpenApi;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.NegocioException;
