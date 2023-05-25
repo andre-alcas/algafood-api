@@ -20,7 +20,8 @@ import com.algaworks.algafood.domain.service.VendaQueryService;
 import com.algaworks.algafood.domain.service.VendaReportService;
 
 @RestController
-@RequestMapping("/estatisticas")
+//@RequestMapping("/estatisticas")
+@RequestMapping(path="/v1/estatisticas", produces = MediaType.APPLICATION_JSON_VALUE)
 public class EstatisticasController implements EstatisticasControllerOpenApi {
 
 	@Autowired

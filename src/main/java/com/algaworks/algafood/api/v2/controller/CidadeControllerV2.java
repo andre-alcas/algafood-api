@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +31,8 @@ import com.algaworks.algafood.domain.repository.CidadeRepository;
 import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
 @RestController
-@RequestMapping(path="/cidades")
-//@RequestMapping(path="/v2/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(path="/cidades")
+@RequestMapping(path="/v2/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CidadeControllerV2 {
 
 	@Autowired

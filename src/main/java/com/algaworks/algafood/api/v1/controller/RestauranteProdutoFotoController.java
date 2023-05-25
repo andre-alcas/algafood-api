@@ -36,7 +36,8 @@ import com.algaworks.algafood.domain.service.FotoStorageService.FotoRecuperada;
 import com.google.common.net.HttpHeaders;
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
+//@RequestMapping("/restaurantes/{restauranteId}/produtos/{produtoId}/foto")
+@RequestMapping(path="/v1/restaurantes/{restauranteId}/produtos/{produtoId}/foto", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoFotoController implements RestauranteProdutoFotoControllerOpenApi  {
 
 	@Autowired

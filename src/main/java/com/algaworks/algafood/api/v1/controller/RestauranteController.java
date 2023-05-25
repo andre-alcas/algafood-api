@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +43,8 @@ import io.swagger.annotations.ApiOperation;
 
 //@CrossOrigin(origins= {"http://localhost:8000"})
 @RestController // @Controller //@ResponseBody
-//@RequestMapping(value = "/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequestMapping("/restaurantes")
+//@RequestMapping("/restaurantes")
+@RequestMapping(path = "/v1/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteController implements RestauranteControllerOpenApi {
 
 	@Autowired

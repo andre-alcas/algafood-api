@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,8 @@ import com.algaworks.algafood.domain.model.Grupo;
 import com.algaworks.algafood.domain.service.CadastroGrupoService;
 
 @RestController
-@RequestMapping("/grupos/{grupoId}/permissoes")
+//@RequestMapping("/grupos/{grupoId}/permissoes")
+@RequestMapping(path="/v1/grupos/{grupoId}/permissoes",produces= MediaType.APPLICATION_JSON_VALUE)
 public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi {
 
 	@Autowired

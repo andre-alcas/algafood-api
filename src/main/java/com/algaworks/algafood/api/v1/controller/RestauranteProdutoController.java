@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,8 @@ import com.algaworks.algafood.domain.service.CadastroProdutoService;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
 @RestController
-@RequestMapping("/restaurantes/{restauranteId}/produtos")
+//@RequestMapping("/restaurantes/{restauranteId}/produtos")
+@RequestMapping(path="/v1/restaurantes/{restauranteId}/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi {
 
 	@Autowired
