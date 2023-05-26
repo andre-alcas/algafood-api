@@ -50,6 +50,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 
+	//@Deprecated //metodo para depreciar essa funcao da API
 	@Override
 	//@GetMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

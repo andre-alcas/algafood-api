@@ -258,15 +258,25 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 	            .referenceModel(ref -> ref.key(k -> k.qualifiedModelName(
 	                    q -> q.name("Problema").namespace("com.algaworks.algafood.api.exceptionhandler")))));
 	}
-
+	
 	public ApiInfo apiInfoV1() {
-		return new ApiInfo("AlgaFood API V1", "API aberta para cliente e restaurantes", "1", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
-//				.title("AlgaFood API")
-//				.description("API aberta para cliente e restaurantes")
-//				.version("1")
-//				.contact(new Contact("AlgaWorks","hhtps://www.andrecarvalho.com.br","contato@andrecarvalho.com.br"))
-//				.build();
+		return new ApiInfo("AlgaFood API V1", "API aberta para cliente e restaurantes.<br>"
+				+ "<strong>Essa versão da API está depreciada e deixará de existir a partir de 01/01/2030.Use a versão mais atual da API.",
+				"1", 
+				"AlgaWorks", 
+				"hhtps://www.andrecarvalho.com.br", 
+				"contato@andrecarvalho.com.br",
+				"1" );
 	}
+
+//	public ApiInfo apiInfoV1() {
+//		return new ApiInfo("AlgaFood API V1", "API aberta para cliente e restaurantes", "1", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
+////				.title("AlgaFood API")
+////				.description("API aberta para cliente e restaurantes")
+////				.version("1")
+////				.contact(new Contact("AlgaWorks","hhtps://www.andrecarvalho.com.br","contato@andrecarvalho.com.br"))
+////				.build();
+//	}
 	public ApiInfo apiInfoV2() {
 		return new ApiInfo("AlgaFood API V2", "API aberta para cliente e restaurantes", "2", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
 	}
