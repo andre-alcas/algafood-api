@@ -35,7 +35,7 @@ import com.algaworks.algafood.domain.service.CadastroCidadeService;
 
 @RestController
 //@RequestMapping(path="/cidades")
-@RequestMapping(path="/v1/cidades", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/cidades")//, produces = MediaType.APPLICATION_JSON_VALUE) nao funciona aqui com spring fox v3, tem q colocar em cada metodo
 public class CidadeController implements CidadeControllerOpenApi {
 
 	@Autowired

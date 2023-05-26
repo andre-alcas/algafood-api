@@ -20,7 +20,7 @@ import com.algaworks.algafood.domain.repository.RestauranteRepository;
 
 @RestController //@Controller //@ResponseBody
 //@RequestMapping(value = "/cozinhas", produces = MediaType.APPLICATION_JSON_VALUE)
-@RequestMapping(path="/v1/teste", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/teste")//, produces = MediaType.APPLICATION_JSON_VALUE)
 public class TesteController {
 
 	@Autowired

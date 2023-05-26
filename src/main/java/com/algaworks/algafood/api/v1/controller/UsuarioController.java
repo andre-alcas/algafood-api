@@ -31,7 +31,7 @@ import com.algaworks.algafood.domain.service.CadastroUsuarioService;
 
 @RestController
 //@RequestMapping("/usuarios")
-@RequestMapping(path="/v1/usuarios",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/usuarios")//,produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioController implements UsuarioControllerOpenApi{
 
 	@Autowired

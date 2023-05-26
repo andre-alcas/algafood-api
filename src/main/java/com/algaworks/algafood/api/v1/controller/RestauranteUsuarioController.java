@@ -22,7 +22,7 @@ import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
 @RestController // @Controller //@ResponseBody
 //@RequestMapping("/restaurantes/{restauranteId}/usuarios")
-@RequestMapping(path = "/v1/restaurantes/{restauranteId}/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/restaurantes/{restauranteId}/usuarios")//, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteUsuarioController implements RestauranteUsuarioControllerOpenApi {
 
 

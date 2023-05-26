@@ -47,6 +47,10 @@ import com.algaworks.algafood.api.v1.openapi.model.PermissoesModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.ProdutosModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.RestaurantesBasicoModelOpenApi;
 import com.algaworks.algafood.api.v1.openapi.model.UsuariosModelOpenApi;
+import com.algaworks.algafood.api.v2.model.CidadeModelV2;
+import com.algaworks.algafood.api.v2.model.CozinhaModelV2;
+import com.algaworks.algafood.api.v2.openapi.model.CidadesModelV2OpenApi;
+import com.algaworks.algafood.api.v2.openapi.model.CozinhasModelV2OpenApi;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -68,12 +72,14 @@ import springfox.documentation.spring.web.plugins.Docket;
 public class SpringFoxConfig implements WebMvcConfigurer  {
 
 	@Bean
-	public Docket apiDocket() {
+	public Docket apiDocketV1() {
 		TypeResolver typeResolver = new TypeResolver();
 		   return new Docket(DocumentationType.OAS_30)
+				    .groupName("V1")
 			        .select()
 			        .apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))//busca só os controladores dentro desse pacote
-			        .paths(PathSelectors.any())
+			        .paths(PathSelectors.ant("/v1/**"))
+			        //.paths(PathSelectors.any())
 //			          .paths(PathSelectors.ant("/restaurantes/*"))
 			        .build()
 			        .useDefaultResponseMessages(false)
@@ -134,7 +140,7 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 			        .alternateTypeRules(AlternateTypeRules.newRule(
 			        	        typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
 			        	        UsuariosModelOpenApi.class))
-			        .apiInfo(apiInfo())
+			        .apiInfo(apiInfoV1())
 			        .tags(
 			        		new Tag("Cidades", "Gerencia as cidades"),
 			                new Tag("Grupos", "Gerencia os grupos de usuários"),
@@ -148,6 +154,41 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 			                new Tag("Estatísticas", "Estatísticas da AlgaFoodAPI"),
 			                new Tag("Permissões", "Gerencia as permissões"));
 				//.apis(RequestHandlerSelectors.any())//busca qualquer controlador (inclusive do spring boot)
+	}
+	
+	@Bean
+	public Docket apiDocketV2() {
+		var typeResolver = new TypeResolver();
+
+		return new Docket(DocumentationType.OAS_30)
+				.groupName("V2")
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.algaworks.algafood.api"))
+				.paths(PathSelectors.ant("/v2/**"))
+				.build()
+				.useDefaultResponseMessages(false)
+				.globalResponses(HttpMethod.GET, globalGetResponseMessages())
+				.globalResponses(HttpMethod.POST, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.PUT, globalPostPutResponseMessages())
+				.globalResponses(HttpMethod.DELETE, globalDeleteResponseMessages())
+				.additionalModels(typeResolver.resolve(Problem.class))
+				.ignoredParameterTypes(ServletWebRequest.class,
+						URL.class, URI.class, URLStreamHandler.class, Resource.class,
+						File.class, InputStream.class)
+				.directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+				.directModelSubstitute(Links.class, LinksModelOpenApi.class)
+				.alternateTypeRules(AlternateTypeRules.newRule(
+					    typeResolver.resolve(PagedModel.class, CozinhaModelV2.class),
+					    CozinhasModelV2OpenApi.class))
+
+					.alternateTypeRules(AlternateTypeRules.newRule(
+					        typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
+					        CidadesModelV2OpenApi.class))
+
+					.apiInfo(apiInfoV2())
+					        
+					.tags(new Tag("Cidades", "Gerencia as cidades"),
+					        new Tag("Cozinhas", "Gerencia as cozinhas"));
 	}
 
 	private List<Response> globalGetResponseMessages() {
@@ -218,13 +259,16 @@ public class SpringFoxConfig implements WebMvcConfigurer  {
 	                    q -> q.name("Problema").namespace("com.algaworks.algafood.api.exceptionhandler")))));
 	}
 
-	public ApiInfo apiInfo() {
-		return new ApiInfo("AlgaFood API", "API aberta para cliente e restaurantes", "1", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
+	public ApiInfo apiInfoV1() {
+		return new ApiInfo("AlgaFood API V1", "API aberta para cliente e restaurantes", "1", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
 //				.title("AlgaFood API")
 //				.description("API aberta para cliente e restaurantes")
 //				.version("1")
 //				.contact(new Contact("AlgaWorks","hhtps://www.andrecarvalho.com.br","contato@andrecarvalho.com.br"))
 //				.build();
+	}
+	public ApiInfo apiInfoV2() {
+		return new ApiInfo("AlgaFood API V2", "API aberta para cliente e restaurantes", "2", "AlgaWorks", "hhtps://www.andrecarvalho.com.br", "contato@andrecarvalho.com.br","1" );
 	}
 
 }

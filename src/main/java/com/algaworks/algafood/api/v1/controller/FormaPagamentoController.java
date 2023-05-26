@@ -35,7 +35,7 @@ import com.algaworks.algafood.domain.service.CadastroFormaPagamentoService;
 
 @RestController
 //@RequestMapping("/formas-pagamento")
-@RequestMapping(path="/v1/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path="/v1/formas-pagamento")//, produces = MediaType.APPLICATION_JSON_VALUE)
 public class FormaPagamentoController implements FormasPagamentoControllerOpenApi {
 
 	@Autowired

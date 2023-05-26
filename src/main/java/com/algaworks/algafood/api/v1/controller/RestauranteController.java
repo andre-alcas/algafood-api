@@ -44,7 +44,7 @@ import io.swagger.annotations.ApiOperation;
 //@CrossOrigin(origins= {"http://localhost:8000"})
 @RestController // @Controller //@ResponseBody
 //@RequestMapping("/restaurantes")
-@RequestMapping(path = "/v1/restaurantes", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/v1/restaurantes")//, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestauranteController implements RestauranteControllerOpenApi {
 
 	@Autowired
