@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class ApiDeprecationHandler implements HandlerInterceptor {
-
+	//para depreciação de uma versao da API
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
