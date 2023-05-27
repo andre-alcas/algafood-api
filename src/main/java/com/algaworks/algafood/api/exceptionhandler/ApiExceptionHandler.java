@@ -33,7 +33,9 @@ import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @ControllerAdvice //anotacao que faz com que todas as exceptions sejam tratadas por aqui, centralizacao
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -114,6 +116,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    // Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam importantes
 	    // para você durante, especialmente na fase de desenvolvimento
 	    ex.printStackTrace();
+	    log.error(ex.getMessage(), ex);
 
 	    Problem problem = createProblemBuilder(status, problemType, detail).build();
 

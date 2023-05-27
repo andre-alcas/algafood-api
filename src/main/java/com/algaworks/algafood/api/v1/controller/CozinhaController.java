@@ -33,7 +33,6 @@ import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController //@Controller //@ResponseBody
 //@RequestMapping(value = "/cozinhas")
 @RequestMapping(path="/v1/cozinhas")//, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +61,10 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	public PagedModel<CozinhaModel> listar(@PageableDefault(size=10) Pageable pageable){
 		
 		//logger.info("Consultando cozinhas...");
-		log.info("Consultando cozinhas...");//quando se usa @Slf4j
+		//log.info("Consultando cozinhas...");//quando se usa @Slf4j
+		if (true) {
+			throw new RuntimeException("Teste de exception");
+		}
 		
 		Page<Cozinha> cozinhasPage = cozinhaRepository.findAll(pageable);
 //		List<CozinhaModel> cozinhasModel = cozinhaModelAssembler.toCollectionModel(cozinhasPage.getContent());
