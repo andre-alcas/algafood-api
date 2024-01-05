@@ -59,6 +59,21 @@ insert into forma_pagamento (id, descricao, data_atualizacao) values (3, 'Dinhei
 
 insert into permissao (id, nome, descricao) values (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
 insert into permissao (id, nome, descricao) values (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
+insert into permissao (id, nome, descricao) values (3, 'CONSULTAR_FORMAS_PAGAMENTO', 'Permite consultar formas de pagamento');
+insert into permissao (id, nome, descricao) values (4, 'EDITAR_FORMAS_PAGAMENTO', 'Permite criar ou editar formas de pagamento');
+insert into permissao (id, nome, descricao) values (5, 'CONSULTAR_CIDADES', 'Permite consultar cidades');
+insert into permissao (id, nome, descricao) values (6, 'EDITAR_CIDADES', 'Permite criar ou editar cidades');
+insert into permissao (id, nome, descricao) values (7, 'CONSULTAR_ESTADOS', 'Permite consultar estados');
+insert into permissao (id, nome, descricao) values (8, 'EDITAR_ESTADOS', 'Permite criar ou editar estados');
+insert into permissao (id, nome, descricao) values (9, 'CONSULTAR_USUARIOS', 'Permite consultar usuários');
+insert into permissao (id, nome, descricao) values (10, 'EDITAR_USUARIOS', 'Permite criar ou editar usuários');
+insert into permissao (id, nome, descricao) values (11, 'CONSULTAR_RESTAURANTES', 'Permite consultar restaurantes');
+insert into permissao (id, nome, descricao) values (12, 'EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
+insert into permissao (id, nome, descricao) values (13, 'CONSULTAR_PRODUTOS', 'Permite consultar produtos');
+insert into permissao (id, nome, descricao) values (14, 'EDITAR_PRODUTOS', 'Permite criar ou editar produtos');
+insert into permissao (id, nome, descricao) values (15, 'CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
+insert into permissao (id, nome, descricao) values (16, 'GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
+insert into permissao (id, nome, descricao) values (17, 'GERAR_RELATORIOS', 'Permite gerar relatórios');
 
 insert into restaurante_forma_pagamento (restaurante_id, forma_pagamento_id) values (1, 1), (1, 2), (1, 3), (2, 3), (3, 2), (3, 3), (4, 1), (4, 2), (5, 1), (5, 2), (6, 3);
 
@@ -80,18 +95,35 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Esp
 
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
-insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1); 
+#insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+#Adiciona todas as permissoes no grupo do gerente
+insert into grupo_permissao (grupo_id, permissao_id)
+select 1, id from permissao;
+
+#Adiciona permissoes no grupo do vendedor
+insert into grupo_permissao (grupo_id, permissao_id)
+select 2, id from permissao where nome like 'CONSULTAR_%';
+
+insert into grupo_permissao (grupo_id, permissao_id) values (2, 14);
+
+#Adiciona permissoes no grupo do auxiliar
+insert into grupo_permissao (grupo_id, permissao_id)
+select 3, id from permissao where nome like 'CONSULTAR_%';
+
+#Adiciona permissoes no grupo cadastrador
+insert into grupo_permissao (grupo_id, permissao_id)
+select 4, id from permissao where nome like '%_RESTAURANTES' or nome like '%_PRODUTOS';
 
 insert into usuario (id, nome, email, senha, data_cadastro) values
-(1, 'João da Silva', 'joao.ger@algafood.com.br', '123', utc_timestamp),
-(2, 'Maria Joaquina', 'maria.vnd@algafood.com.br', '123', utc_timestamp),
-(3, 'José Souza', 'jose.aux@algafood.com.br', '123', utc_timestamp),
-(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com.br', '123', utc_timestamp),
-(5, 'Kratos', 'manoel.loja@gmail.com', '123', utc_timestamp),
-(6, 'Márcia Siqueira', 'eng.marciafontes@gmail.com', '123', utc_timestamp),
-(7, 'André Siqueira', 'alcas.andre@gmail.com', '123', utc_timestamp);
+(1, 'João da Silva', 'joao.ger@algafood.com.br', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(2, 'Maria Joaquina', 'maria.vnd@algafood.com.br', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(3, 'José Souza', 'jose.aux@algafood.com.br', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(4, 'Sebastião Martins', 'sebastiao.cad@algafood.com.br', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(5, 'Kratos', 'manoel.loja@gmail.com', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(6, 'Márcia Siqueira', 'eng.marciafontes@gmail.com', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp),
+(7, 'André Siqueira', 'alcas.andre@gmail.com', '$2a$12$xlmC7QNEM3746kFlyGJ1cuQRBTbGJP/UhY1iUCFDQ9c9g06BW3zLC', utc_timestamp);
 
-insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
 insert into restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
 
@@ -147,3 +179,4 @@ values (5, '8d774bcf-b238-42f3-aef1-5fb388754d63', 1, 3, 2, 1, '38400-200', 'Rua
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (6, 5, 3, 1, 87.2, 87.2, null);
+

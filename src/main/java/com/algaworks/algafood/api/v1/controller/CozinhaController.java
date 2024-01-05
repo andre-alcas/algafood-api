@@ -10,6 +10,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,6 +58,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 	private PagedResourcesAssembler<Cozinha> pagedResourcesAssembler;
 
 	//@GetMapping//(produces= {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} ) //retorna jason e xml, mas dá pra escolher o que produzir(formato)
+	@PreAuthorize("isAuthenticated()")
 	@Override
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public PagedModel<CozinhaModel> listar(@PageableDefault(size=10) Pageable pageable){
@@ -80,6 +82,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		return cozinhasPagedModel;
 	}
 
+	@PreAuthorize("isAuthenticated()")
 	@Override
 	@GetMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel buscar(@PathVariable Long cozinhaId) {
@@ -96,6 +99,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 //		//return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 //		return ResponseEntity.notFound().build();
 //	}
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
@@ -109,6 +113,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 		//return cadastroCozinha.salvar(cozinha);//retornar no corpo da resposta o recurso
 	}
 
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@Override
 	@PutMapping(value = "/{cozinhaId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CozinhaModel atualizar(@PathVariable Long cozinhaId, @RequestBody  @Valid CozinhaInput cozinhaInput) {//instancia de cozinha com propriedades vinda do corpo da requisição
@@ -144,6 +149,7 @@ public class CozinhaController implements CozinhaControllerOpenApi {
 //		}
 //		return ResponseEntity.notFound().build();
 //	}
+	@PreAuthorize("hasAuthority('EDITAR_COZINHAS')")
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{cozinhaId}", produces = {})
