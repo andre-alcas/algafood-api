@@ -17,6 +17,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.UsuarioModelAssembler;
 import com.algaworks.algafood.api.v1.model.UsuarioModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteUsuarioControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
@@ -35,6 +36,7 @@ public class RestauranteUsuarioController implements RestauranteUsuarioControlle
 	@Autowired
 	private AlgaLinks algaLinks;
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping
 	public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
@@ -53,6 +55,7 @@ public class RestauranteUsuarioController implements RestauranteUsuarioControlle
 	    return usuariosModel;
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@DeleteMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -62,6 +65,7 @@ public class RestauranteUsuarioController implements RestauranteUsuarioControlle
 	    return ResponseEntity.noContent().build();
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping("/{usuarioId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

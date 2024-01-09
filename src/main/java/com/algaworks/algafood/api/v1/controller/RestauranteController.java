@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,8 @@ import com.algaworks.algafood.api.v1.model.RestauranteApenasNomeModel;
 import com.algaworks.algafood.api.v1.model.RestauranteBasicoModel;
 import com.algaworks.algafood.api.v1.model.RestauranteModel;
 import com.algaworks.algafood.api.v1.model.input.RestauranteInput;
-import com.algaworks.algafood.api.v1.model.view.RestauranteView;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.exception.CidadeNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
 import com.algaworks.algafood.domain.exception.EntidadeNaoEncontradaException;
@@ -37,9 +36,6 @@ import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
-import com.fasterxml.jackson.annotation.JsonView;
-
-import io.swagger.annotations.ApiOperation;
 
 //@CrossOrigin(origins= {"http://localhost:8000"})
 @RestController // @Controller //@ResponseBody
@@ -86,6 +82,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 //		return restaurantesWrapper;
 //	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping
 	public CollectionModel<RestauranteBasicoModel> listar() {
@@ -109,6 +106,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	 * como não é possivel anotar usando JsonView em CollectionModel entao foi
 	 * necessario refatorar os metodos
 	 */
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping(params = "projecao=apenas-nome")
 	public CollectionModel<RestauranteApenasNomeModel> listarApenasNomes() {
@@ -122,6 +120,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 //		return listar();
 //	}
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping(value = "/{restauranteId}")
 	public RestauranteModel buscar(@PathVariable Long restauranteId) {
@@ -130,6 +129,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		// return cadastroRestaurante.buscarOuFalhar(restauranteId);
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
@@ -146,6 +146,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping(value = "/{restauranteId}")
 	public RestauranteModel atualizar(@PathVariable Long restauranteId,
@@ -169,6 +170,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/ativo para ativar
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -178,6 +180,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// DELETE /restaurantes/{id}/ativo para inativar
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@DeleteMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -187,6 +190,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/fechamento
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping(value = "/{restauranteId}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -197,6 +201,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/fechamento
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping(value = "/{restauranteId}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -206,6 +211,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return ResponseEntity.noContent().build();
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping(value = "/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -217,6 +223,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@DeleteMapping(value = "/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

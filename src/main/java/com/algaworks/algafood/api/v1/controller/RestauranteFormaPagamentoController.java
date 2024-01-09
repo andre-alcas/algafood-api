@@ -1,11 +1,8 @@
 package com.algaworks.algafood.api.v1.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +16,7 @@ import com.algaworks.algafood.api.v1.AlgaLinks;
 import com.algaworks.algafood.api.v1.assembler.FormaPagamentoModelAssembler;
 import com.algaworks.algafood.api.v1.model.FormaPagamentoModel;
 import com.algaworks.algafood.api.v1.openapi.controller.RestauranteFormaPagamentoControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Restaurante;
 import com.algaworks.algafood.domain.service.CadastroRestauranteService;
 
@@ -37,6 +35,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 	@Autowired
 	private AlgaLinks algaLinks;
 
+	@CheckSecurity.Restaurantes.PodeConsultar
 	@Override
 	@GetMapping
 	public CollectionModel<FormaPagamentoModel> listar(@PathVariable Long restauranteId) {
@@ -63,6 +62,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 //		return formaPagamentoModelAssembler.toCollectionModel(restaurante.getFormasPagamento());
 //	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@DeleteMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -72,6 +72,7 @@ public class RestauranteFormaPagamentoController implements RestauranteFormaPaga
 		return ResponseEntity.noContent().build();
 	}
 
+	@CheckSecurity.Restaurantes.PodeEditar
 	@Override
 	@PutMapping("/{formaPagamentoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
