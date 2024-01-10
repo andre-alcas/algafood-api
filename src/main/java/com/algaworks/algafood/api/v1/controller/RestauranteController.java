@@ -129,7 +129,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		// return cadastroRestaurante.buscarOuFalhar(restauranteId);
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
@@ -146,7 +146,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@PutMapping(value = "/{restauranteId}")
 	public RestauranteModel atualizar(@PathVariable Long restauranteId,
@@ -170,7 +170,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/ativo para ativar
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@PutMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -180,7 +180,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// DELETE /restaurantes/{id}/ativo para inativar
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@DeleteMapping(value = "/{restauranteId}/ativo")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -190,7 +190,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/fechamento
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@Override
 	@PutMapping(value = "/{restauranteId}/abertura")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -201,7 +201,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 	}
 
 	// PUT /restaurantes/{id}/fechamento
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarFuncionamento
 	@Override
 	@PutMapping(value = "/{restauranteId}/fechamento")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -211,7 +211,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		return ResponseEntity.noContent().build();
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@PutMapping(value = "/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -223,7 +223,7 @@ public class RestauranteController implements RestauranteControllerOpenApi {
 		}
 	}
 
-	@CheckSecurity.Restaurantes.PodeEditar
+	@CheckSecurity.Restaurantes.PodeGerenciarCadastro
 	@Override
 	@DeleteMapping(value = "/ativacoes")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
