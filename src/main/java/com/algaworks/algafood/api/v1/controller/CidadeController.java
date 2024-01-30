@@ -6,8 +6,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +24,7 @@ import com.algaworks.algafood.api.v1.assembler.CidadeModelAssembler;
 import com.algaworks.algafood.api.v1.model.CidadeModel;
 import com.algaworks.algafood.api.v1.model.input.CidadeInput;
 import com.algaworks.algafood.api.v1.openapi.controller.CidadeControllerOpenApi;
-import com.algaworks.algafood.core.web.AlgaMediaTypes;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import com.algaworks.algafood.domain.exception.NegocioException;
 import com.algaworks.algafood.domain.model.Cidade;
@@ -50,6 +48,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 	@Autowired
 	private CidadeInputDisassembler cidadeInputDisassembler;
 
+	@CheckSecurity.Cidades.PodeConsultar
 	//@Deprecated //metodo para depreciar essa funcao da API
 	@Override
 	//@GetMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
@@ -61,6 +60,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		return cidadeModelAssembler.toCollectionModel(todasCidades);
 	}
 
+	@CheckSecurity.Cidades.PodeConsultar
 	@Override
 	//@GetMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
 	@GetMapping(path = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,6 +71,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		return cidadeModelAssembler.toModel(cidade);
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	//@PostMapping(produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
@@ -91,6 +92,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 		}
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@Override
 	//@PutMapping(path = "/{cidadeId}", produces = AlgaMediaTypes.V1_APPLICATION_JSON_VALUE)
 	@PutMapping(path = "/{cidadeId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -108,6 +110,7 @@ public class CidadeController implements CidadeControllerOpenApi {
 
 	}
 
+	@CheckSecurity.Cidades.PodeEditar
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{cidadeId}")

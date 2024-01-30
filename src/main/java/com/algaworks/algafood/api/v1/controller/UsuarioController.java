@@ -1,13 +1,10 @@
 package com.algaworks.algafood.api.v1.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +22,7 @@ import com.algaworks.algafood.api.v1.model.input.SenhaInput;
 import com.algaworks.algafood.api.v1.model.input.UsuarioComSenhaInput;
 import com.algaworks.algafood.api.v1.model.input.UsuarioInput;
 import com.algaworks.algafood.api.v1.openapi.controller.UsuarioControllerOpenApi;
+import com.algaworks.algafood.core.security.CheckSecurity;
 import com.algaworks.algafood.domain.model.Usuario;
 import com.algaworks.algafood.domain.repository.UsuarioRepository;
 import com.algaworks.algafood.domain.service.CadastroUsuarioService;
@@ -46,18 +44,21 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 	@Autowired
 	private UsuarioInputDisassembler usuarioInputDisassembler;
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@Override
 	@GetMapping
 	public CollectionModel<UsuarioModel> listar() {
 		return usuarioModelAssembler.toCollectionModel(usuarioRepository.findAll());
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@Override
 	@GetMapping(value = "/{usuarioId}")
 	public UsuarioModel buscar(@PathVariable Long usuarioId) {
 		return usuarioModelAssembler.toModel(cadastroUsuario.buscarOuFalhar(usuarioId));
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeEditar
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
@@ -66,6 +67,7 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 		return usuarioModelAssembler.toModel(cadastroUsuario.salvar(usuario));
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeAlterarUsuario
 	@Override
 	@PutMapping(value = "/{usuarioId}")
 	public UsuarioModel atualizar(@PathVariable Long usuarioId, @RequestBody @Valid UsuarioInput  usuarioInput) {// instancia de usuario com
@@ -78,6 +80,7 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 		return usuarioModelAssembler.toModel(cadastroUsuario.salvar(usuarioAtual));
 	}
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeAlterarPropriaSenha
 	@Override
 	@PutMapping("/{usuarioId}/senha")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -96,6 +99,7 @@ public class UsuarioController implements UsuarioControllerOpenApi{
 
 
 
+	@CheckSecurity.UsuariosGruposPermissoes.PodeEditar
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{usuarioId}")
 	public void remover(@PathVariable Long usuarioId) {
